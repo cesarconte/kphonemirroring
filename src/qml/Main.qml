@@ -32,10 +32,9 @@ Window {
         border.width: 1
         clip: true
 
-        // Drag Handler to move frameless window
+        // Native Wayland move handler
         DragHandler {
-            target: window
-            grabPermissions: TapHandler.CanTakeOverFromItems | TapHandler.Approvals
+            onActiveChanged: if (active) window.startSystemMove()
         }
 
         ColumnLayout {
