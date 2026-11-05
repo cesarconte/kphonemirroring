@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=Phone Mirroring
+GenericName=Phone Mirroring
+Comment=Continuity Phone Mirroring for Android & Plasma
+Exec=kphonemirroring
+Icon=kphonemirroring
+Terminal=false
+Type=Application
+Categories=Utility;Qt;KDE;
+StartupNotify=true
+StartupWMClass=kphonemirroring
+Keywords=phone;mirror;android;scrcpy;sequoia;hyperos;
+X-KDE-SubstituteUID=false

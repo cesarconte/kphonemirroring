@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="100%" height="100%">
+  <defs>
+    <!-- Background Squircle Gradient -->
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#2C2C2E"/>
+      <stop offset="100%" stop-color="#1C1C1E"/>
+    </linearGradient>
+
+    <!-- Glass / Screen Gradient (Sequoia Sunset) -->
+    <linearGradient id="screenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0A84FF"/>
+      <stop offset="30%" stop-color="#5E5CE6"/>
+      <stop offset="65%" stop-color="#BF5AF2"/>
+      <stop offset="85%" stop-color="#FF375F"/>
+      <stop offset="100%" stop-color="#FF9F0A"/>
+    </linearGradient>
+
+    <!-- Titanium Border Gradient -->
+    <linearGradient id="titaniumGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#707074"/>
+      <stop offset="50%" stop-color="#3A3A3C"/>
+      <stop offset="100%" stop-color="#545458"/>
+    </linearGradient>
+
+    <!-- Drop Shadow -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="125%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="16" stdDeviation="20" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+
+    <filter id="innerGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in2="SourceAlpha" operator="arithmetic" k2="-1" k3="1" result="shadowDiff"/>
+      <feFlood flood-color="#FFFFFF" flood-opacity="0.2"/>
+      <feComposite in2="shadowDiff" operator="in"/>
+      <feComposite in2="SourceGraphic" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base Icon Squircle (macOS Big Sur / Sequoia style) -->
+  <rect x="32" y="32" width="448" height="448" rx="100" ry="100" fill="url(#bgGrad)" filter="url(#shadow)" stroke="#48484A" stroke-width="2"/>
+
+  <!-- Phone Chassis Outer Frame -->
+  <rect x="136" y="70" width="240" height="372" rx="42" ry="42" fill="#1C1C1E" stroke="url(#titaniumGrad)" stroke-width="6" filter="url(#shadow)"/>
+
+  <!-- Phone Screen with macOS Sequoia Wallpaper Glow -->
+  <rect x="146" y="80" width="220" height="352" rx="34" ry="34" fill="url(#screenGrad)"/>
+
+  <!-- Dynamic Island / Top Camera Punch Hole -->
+  <rect x="226" y="92" width="60" height="18" rx="9" ry="9" fill="#000000"/>
+  <circle cx="270" cy="101" r="4.5" fill="#1A1A24"/>
+  <circle cx="271" cy="100" r="1.5" fill="#0A84FF" opacity="0.8"/>
+
+  <!-- Home Indicator Bar at the bottom -->
+  <rect x="216" y="416" width="80" height="5" rx="2.5" ry="2.5" fill="#FFFFFF" opacity="0.85"/>
+
+  <!-- Mirroring Wave / Link Rings symbol (subtle overlay) -->
+  <g transform="translate(256, 250)" stroke="#FFFFFF" stroke-width="3" fill="none" opacity="0.35">
+    <circle cx="0" cy="0" r="40" stroke-dasharray="10 6"/>
+    <circle cx="0" cy="0" r="70" stroke-dasharray="12 8"/>
+  </g>
+
+  <!-- Center Mirroring Icon (Screen + Phone) -->
+  <g transform="translate(216, 210)">
+    <!-- Laptop screen silhouette -->
+    <rect x="-8" y="0" width="96" height="64" rx="8" ry="8" fill="#FFFFFF" fill-opacity="0.15" stroke="#FFFFFF" stroke-width="3.5"/>
+    <rect x="-18" y="64" width="116" height="5" rx="2.5" ry="2.5" fill="#FFFFFF" fill-opacity="0.8"/>
+    <!-- Small phone cast overlay -->
+    <rect x="42" y="16" width="36" height="58" rx="8" ry="8" fill="#1C1C1E" stroke="#FFFFFF" stroke-width="3"/>
+    <rect x="54" y="20" width="12" height="3" rx="1.5" ry="1.5" fill="#FFFFFF"/>
+    <rect x="52" y="68" width="16" height="2" rx="1" ry="1" fill="#FFFFFF"/>
+  </g>
+
+  <!-- Top Glass Sheen -->
+  <path d="M 146 80 L 366 80 Q 366 180 146 240 Z" fill="#FFFFFF" opacity="0.08"/>
+</svg>
