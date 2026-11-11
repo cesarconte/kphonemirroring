@@ -3,6 +3,7 @@
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
+#include <QSettings>
 #include <QDebug>
 
 MirrorSession::MirrorSession(QObject *parent)
@@ -167,6 +168,88 @@ void MirrorSession::sendExpandNotifications()
 void MirrorSession::sendExpandSettings()
 {
     runAdbShellCommand({"cmd", "statusbar", "expand-settings"});
+}
+
+void MirrorSession::setControlCenterVisible(bool visible)
+{
+    if (m_controlCenterVisible == visible) {
+        return;
+    }
+    m_controlCenterVisible = visible;
+    Q_EMIT controlCenterVisibleChanged();
+}
+
+void MirrorSession::openControlCenter()
+{
+    setControlCenterVisible(!m_controlCenterVisible);
+    if (m_controlCenterVisible) {
+        runAdbShellCommand({"cmd", "statusbar", "expand-settings"});
+    }
+}
+
+void MirrorSession::openSpotlight()
+{
+    runAdbShellCommand({"input", "keyevent", "84"});
+}
+
+void MirrorSession::openApp(const QString &appId, const QString &appTitle, const QString &androidPackage)
+{
+    const QString cleanId = appId.trimmed().isEmpty() ? QStringLiteral("today") : appId.trimmed();
+    m_currentAppId = cleanId;
+    m_currentAppTitle = appTitle.trimmed().isEmpty() ? cleanId : appTitle.trimmed();
+    Q_EMIT currentAppChanged();
+
+    if (!androidPackage.trimmed().isEmpty()) {
+        runAdbShellCommand({"monkey", "-p", androidPackage.trimmed(), "-c", "android.intent.category.LAUNCHER", "1"});
+    }
+
+    const QVariantMap saved = rememberedSizeForApp(cleanId);
+    const int w = saved.value(QStringLiteral("width"), 780).toInt();
+    const int h = saved.value(QStringLiteral("height"), 620).toInt();
+    Q_EMIT requestWindowResize(w, h);
+}
+
+void MirrorSession::returnToHomeScreen()
+{
+    m_currentAppId = QStringLiteral("home");
+    m_currentAppTitle = QStringLiteral("Home Screen");
+    m_controlCenterVisible = false;
+    Q_EMIT currentAppChanged();
+    Q_EMIT controlCenterVisibleChanged();
+
+    sendHome();
+    // Golden Gate resets window to normal portrait size when returning to Home Screen
+    Q_EMIT requestWindowResize(440, 700);
+}
+
+void MirrorSession::saveAppWindowSize(const QString &appId, int width, int height)
+{
+    const QString cleanId = appId.trimmed();
+    if (cleanId.isEmpty() || cleanId == QLatin1String("home")) {
+        return;
+    }
+    QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
+    settings.beginGroup(QStringLiteral("AppWindowSizes"));
+    settings.setValue(cleanId + QStringLiteral("_width"), qBound(400, width, 1600));
+    settings.setValue(cleanId + QStringLiteral("_height"), qBound(520, height, 1200));
+    settings.endGroup();
+    settings.sync();
+}
+
+QVariantMap MirrorSession::rememberedSizeForApp(const QString &appId) const
+{
+    const QString cleanId = appId.trimmed();
+    QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
+    settings.beginGroup(QStringLiteral("AppWindowSizes"));
+    const int defaultW = (cleanId == QLatin1String("home")) ? 440 : 780;
+    const int defaultH = (cleanId == QLatin1String("home")) ? 700 : 620;
+    const int w = settings.value(cleanId + QStringLiteral("_width"), defaultW).toInt();
+    const int h = settings.value(cleanId + QStringLiteral("_height"), defaultH).toInt();
+    settings.endGroup();
+    return {
+        {QStringLiteral("width"), w},
+        {QStringLiteral("height"), h}
+    };
 }
 
 void MirrorSession::takeScreenshot()

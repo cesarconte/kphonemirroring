@@ -12,6 +12,7 @@ private Q_SLOTS:
     void testParseAdbDevicesUnauthorized();
     void testBuildScrcpyArgsDefaults();
     void testBuildScrcpyArgsCustom();
+    void testGoldenGatePerAppWindowSizeMemory();
 };
 
 void TestPhoneMirroring::testParseAdbDevicesEmpty()
@@ -94,6 +95,37 @@ void TestPhoneMirroring::testBuildScrcpyArgsCustom()
     QVERIFY(args.contains("--max-fps=30"));
     QVERIFY(args.contains("--video-bit-rate=8M"));
     QCOMPARE(args.at(args.indexOf("--window-title=My Phone")), QStringLiteral("--window-title=My Phone"));
+}
+
+void TestPhoneMirroring::testGoldenGatePerAppWindowSizeMemory()
+{
+    MirrorSession session;
+    QSignalSpy resizeSpy(&session, &MirrorSession::requestWindowResize);
+
+    // Save custom multi-column dimensions for "chatgpt"
+    session.saveAppWindowSize(QStringLiteral("chatgpt"), 860, 650);
+    const QVariantMap remembered = session.rememberedSizeForApp(QStringLiteral("chatgpt"));
+    QCOMPARE(remembered.value(QStringLiteral("width")).toInt(), 860);
+    QCOMPARE(remembered.value(QStringLiteral("height")).toInt(), 650);
+
+    // Opening the app emits requestWindowResize with the remembered size
+    session.openApp(QStringLiteral("chatgpt"), QStringLiteral("ChatGPT"));
+    QCOMPARE(session.currentAppId(), QStringLiteral("chatgpt"));
+    QCOMPARE(resizeSpy.count(), 1);
+    QCOMPARE(resizeSpy.at(0).at(0).toInt(), 860);
+    QCOMPARE(resizeSpy.at(0).at(1).toInt(), 650);
+
+    // Returning to Home Screen resets window to normal portrait size (440x700)
+    session.returnToHomeScreen();
+    QCOMPARE(session.currentAppId(), QStringLiteral("home"));
+    QCOMPARE(resizeSpy.count(), 2);
+    QCOMPARE(resizeSpy.at(1).at(0).toInt(), 440);
+    QCOMPARE(resizeSpy.at(1).at(1).toInt(), 700);
+
+    // Control Center toggle (Cmd+4)
+    QVERIFY(!session.controlCenterVisible());
+    session.openControlCenter();
+    QVERIFY(session.controlCenterVisible());
 }
 
 QTEST_MAIN(TestPhoneMirroring)

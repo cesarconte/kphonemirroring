@@ -3,6 +3,7 @@
 #include <QObject>
 #include <QString>
 #include <QStringList>
+#include <QVariantMap>
 #include <QProcess>
 
 class MirrorSession : public QObject {
@@ -10,6 +11,9 @@ class MirrorSession : public QObject {
     Q_PROPERTY(bool isRunning READ isRunning NOTIFY runningChanged)
     Q_PROPERTY(QString activeSerial READ activeSerial NOTIFY activeSerialChanged)
     Q_PROPERTY(QString errorMessage READ errorMessage NOTIFY errorMessageChanged)
+    Q_PROPERTY(QString currentAppId READ currentAppId NOTIFY currentAppChanged)
+    Q_PROPERTY(QString currentAppTitle READ currentAppTitle NOTIFY currentAppChanged)
+    Q_PROPERTY(bool controlCenterVisible READ controlCenterVisible WRITE setControlCenterVisible NOTIFY controlCenterVisibleChanged)
 
 public:
     explicit MirrorSession(QObject *parent = nullptr);
@@ -18,6 +22,10 @@ public:
     bool isRunning() const;
     QString activeSerial() const { return m_activeSerial; }
     QString errorMessage() const { return m_errorMessage; }
+    QString currentAppId() const { return m_currentAppId; }
+    QString currentAppTitle() const { return m_currentAppTitle; }
+    bool controlCenterVisible() const { return m_controlCenterVisible; }
+    void setControlCenterVisible(bool visible);
 
     static QStringList buildScrcpyArgs(const QString &serial,
                                       bool turnScreenOff = true,
@@ -37,7 +45,7 @@ public Q_SLOTS:
                         const QString &windowTitle = QString());
     void stopMirroring();
 
-    // Sequoia Quick Actions
+    // Golden Gate & Sequoia Quick Actions
     void sendHome();
     void sendAppSwitcher();
     void sendBack();
@@ -46,7 +54,15 @@ public Q_SLOTS:
     void sendVolumeDown();
     void sendExpandNotifications();
     void sendExpandSettings();
+    void openControlCenter();
+    void openSpotlight();
     void takeScreenshot();
+
+    // Golden Gate Per-App Dynamic Window Size Memory
+    void openApp(const QString &appId, const QString &appTitle, const QString &androidPackage = QString());
+    void returnToHomeScreen();
+    void saveAppWindowSize(const QString &appId, int width, int height);
+    QVariantMap rememberedSizeForApp(const QString &appId) const;
 
 Q_SIGNALS:
     void runningChanged(bool running);
@@ -54,6 +70,9 @@ Q_SIGNALS:
     void errorMessageChanged(const QString &error);
     void screenshotTaken(const QString &filePath);
     void sessionFinished(int exitCode);
+    void currentAppChanged();
+    void controlCenterVisibleChanged();
+    void requestWindowResize(int width, int height);
 
 private:
     void runAdbShellCommand(const QStringList &args);
@@ -61,4 +80,7 @@ private:
     QProcess *m_scrcpyProcess = nullptr;
     QString m_activeSerial;
     QString m_errorMessage;
+    QString m_currentAppId = QStringLiteral("today");
+    QString m_currentAppTitle = QStringLiteral("Today");
+    bool m_controlCenterVisible = false;
 };
