@@ -3,7 +3,7 @@
     SPDX-License-Identifier: GPL-3.0-or-later
 
     Golden Gate "device bezel" action button used by the top-right header
-    cluster of the macOS 27 Android Phone Mirroring window (Home Screen, App Switcher
+    cluster of the CachyOS Android Phone Mirroring window (Home Screen, App Switcher
     and Control Center). The glyphs are drawn as vectors so they stay crisp and
     they inherit the `CachyTheme` palette (light/dark aware).
 */

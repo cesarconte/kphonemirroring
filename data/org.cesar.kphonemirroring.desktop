@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Android Mirroring
 GenericName=Android Phone Mirroring
-Comment=Continuity Phone Mirroring for Android & Plasma 6
+Comment=Phone Mirroring for Android devices on KDE Plasma 6
 Exec=kphonemirroring
 Icon=kphonemirroring
 Terminal=false
@@ -9,5 +9,5 @@ Type=Application
 Categories=Utility;Qt;KDE;
 StartupNotify=true
 StartupWMClass=kphonemirroring
-Keywords=android;phone;mirror;scrcpy;sequoia;hyperos;
+Keywords=android;phone;mirror;scrcpy;hyperos;wayland;
 X-KDE-SubstituteUID=false

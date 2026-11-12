@@ -45,7 +45,7 @@ ColumnLayout {
         Text {
             Layout.fillWidth: true
             Layout.minimumWidth: 0
-            text: "macOS 27 Golden Gate"
+            text: CachyTheme.distroName
             font.pixelSize: 11
             color: CachyTheme.textSecondary
             elide: Text.ElideRight
@@ -220,5 +220,17 @@ ColumnLayout {
         flat: true
         enabled: deviceManager.hasDevice
         onClicked: deviceManager.enableWirelessMode()
+    }
+
+    // Platform identification: distribution and desktop shell generation.
+    Text {
+        Layout.fillWidth: true
+        Layout.minimumWidth: 0
+        Layout.topMargin: 2
+        text: CachyTheme.desktopShell
+        font.pixelSize: 10
+        color: CachyTheme.textMuted
+        horizontalAlignment: Text.AlignHCenter
+        elide: Text.ElideRight
     }
 }

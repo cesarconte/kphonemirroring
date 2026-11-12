@@ -2,7 +2,7 @@
     SPDX-FileCopyrightText: 2026 Cesar
     SPDX-License-Identifier: GPL-3.0-or-later
 
-    macOS 27 "Golden Gate" Android Phone Mirroring — KDE Plasma 6 (Wayland).
+    CachyOS.UI Android Phone Mirroring — KDE Plasma 6 (Wayland).
 
     Design contract (cachyos-ui / DESIGN_SYSTEM.md):
       * Liquid Glass frame: NO opaque `backgroundColor` override, the window keeps
@@ -61,7 +61,7 @@ CachyWindow {
     readonly property int viewportHeight: root.height - CachyTheme.titleBarHeight - (CachyTheme.marginWindow * 2)
 
     // =========================================================================
-    // 2. KEYBOARD SHORTCUTS (macOS 27 Phone Mirroring parity)
+    // 2. KEYBOARD SHORTCUTS (Golden Gate parity)
     // =========================================================================
     Shortcut {
         sequence: "Ctrl+1"
@@ -76,7 +76,7 @@ CachyWindow {
     }
     Shortcut {
         sequence: "Ctrl+3"
-        onActivated: mirrorSession.openSpotlight()
+        onActivated: mirrorSession.openSearch()
     }
     Shortcut {
         sequence: "Ctrl+4"
@@ -130,7 +130,7 @@ CachyWindow {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 8
 
-            // Sidebar visibility toggle (macOS 27 collapsible sidebar)
+            // Sidebar visibility toggle (collapsible sidebar)
             CachyToolbarButton {
                 text: root.showSidebar ? "◧" : "◨"
                 tooltipText: root.showSidebar ? "Ocultar la barra lateral" : "Mostrar la barra lateral"
@@ -175,8 +175,8 @@ CachyWindow {
                         onTriggered: mirrorSession.sendAppSwitcher()
                     }
                     QQC2.MenuItem {
-                        text: "Spotlight\tCtrl+3"
-                        onTriggered: mirrorSession.openSpotlight()
+                        text: "Búsqueda\tCtrl+3"
+                        onTriggered: mirrorSession.openSearch()
                     }
                     QQC2.MenuItem {
                         text: "Control Center\tCtrl+4"
@@ -298,7 +298,7 @@ CachyWindow {
             }
 
             // Host-side scrcpy quick actions (outside of the device screen)
-            SequoiaToolbar {
+            QuickActionsToolbar {
                 Layout.fillWidth: true
                 visible: root.activeTab === "device"
             }

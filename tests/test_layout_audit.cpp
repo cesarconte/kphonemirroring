@@ -171,8 +171,8 @@ void TestLayoutAudit::auditHeaderTitleSweep()
 
     const QStringList titles = {
         QStringLiteral("Android Mirroring"),
-        QStringLiteral("Android & iPhone Phone Mirroring"),
-        QStringLiteral("Android Phone Mirroring — Continuity Control Center Extended"),
+        QStringLiteral("Android Phone Mirroring — Wide Title"),
+        QStringLiteral("Android Phone Mirroring — Extended Control Center"),
     };
 
     for (const QString &title : titles) {

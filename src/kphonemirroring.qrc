@@ -8,7 +8,7 @@
         <file>qml/DeviceAppsPage.qml</file>
         <file>qml/DeviceLivePage.qml</file>
         <file>qml/BezelActionButton.qml</file>
-        <file>qml/SequoiaToolbar.qml</file>
+        <file>qml/QuickActionsToolbar.qml</file>
         <file>qml/ControlCenterSheet.qml</file>
         <file>qml/PreferencesSheet.qml</file>
         <file>resources/icons/kphonemirroring.svg</file>

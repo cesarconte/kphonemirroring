@@ -3,7 +3,7 @@
     SPDX-License-Identifier: GPL-3.0-or-later
 
     Golden Gate Control Center (Ctrl+4) rendered as a Liquid Glass sheet on top
-    of the window, replicating the macOS 27 Android Phone Mirroring quick controls.
+    of the window, replicating the CachyOS Android Phone Mirroring quick controls.
 */
 
 pragma ComponentBehavior: Bound

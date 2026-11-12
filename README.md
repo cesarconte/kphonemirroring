@@ -1,10 +1,8 @@
 # Phone Mirroring (`kphonemirroring`)
 
-**macOS 27 "Golden Gate" Android Phone Mirroring experience on KDE Plasma 6 (Wayland / Qt6).**
+**CachyOS.UI Android Phone Mirroring experience on KDE Plasma 6 (Wayland / Qt6).**
 
-Designed to deliver the seamless continuity experience of macOS Sequoia/Tahoe Phone Mirroring on Linux desktops with zero friction.
-
-The whole telephony experience is oriented exclusively to **Android** devices driven through `scrcpy`.
+A seamless phone mirroring experience for **Android** devices driven through `scrcpy`, built with the CachyOS design system (Golden Gate / Liquid Glass) on top of KDE Plasma 6.
 
 ![Phone Mirroring Icon](src/resources/icons/kphonemirroring.svg)
 
@@ -15,7 +13,7 @@ The whole telephony experience is oriented exclusively to **Android** devices dr
 ### Golden Gate / Liquid Glass (CachyOS.UI)
 
 - **Liquid Glass window frame**: translucent `CachyTheme.windowBackground`, KWin blur region (`CachyWindowBlur`), gloss sheen gradient and the continuous 1 px specular rim. No opaque colour overrides the glass.
-- **Canonical macOS chrome**: 44 px title bar with the hard 1 px divider, traffic lights at 18 px with the specular crescent and the elastic 1.18× press, centred title, header actions anchored at 18 px and the **Preferences gear always last** (right-most).
+- **Canonical CachyOS chrome**: 44 px title bar with the hard 1 px divider, traffic lights at 18 px with the specular crescent and the elastic 1.18× press, centred title, header actions anchored at 18 px and the **Preferences gear always last** (right-most).
 - **Edge-to-edge sidebar** (`232 px`) with the brand block, the live device list (colourful squircle badges, bold selection, live battery counter), the session status card and the mirroring actions.
 - **Unified 20 px squircle** (`CachyTheme.radiusWindow`) and 18 px canonical perimeter margin.
 - **Light/Dark aware**: every chrome colour comes from the `CachyTheme` singleton; the glass tint follows the global *Liquid Glass Opacity* setting.
@@ -23,8 +21,8 @@ The whole telephony experience is oriented exclusively to **Android** devices dr
 ### Mirroring
 
 - **Device chassis**: titanium bezel + punch-hole camera hosting the mirrored screen.
-- **Host-side quick actions** (`SequoiaToolbar`): 🏠 Inicio · 🗂️ Multitarea · 🔒 Bloquear · 🔔 Avisos · ⚙️ Ajustes · 📸 Captura · 🔉/🔊 Volumen.
-- **Golden Gate bezel cluster** (top-right): *Home Screen* `Ctrl+1`, *App Switcher* `Ctrl+2`, *Spotlight* `Ctrl+3`, *Control Center* `Ctrl+4`.
+- **Host-side quick actions** (`QuickActionsToolbar`): 🏠 Inicio · 🗂️ Multitarea · 🔒 Bloquear · 🔔 Avisos · ⚙️ Ajustes · 📸 Captura · 🔉/🔊 Volumen.
+- **Golden Gate bezel cluster** (top-right): *Home Screen* `Ctrl+1`, *App Switcher* `Ctrl+2`, *Búsqueda* `Ctrl+3`, *Control Center* `Ctrl+4`.
 - **Title band guarantee**: the window title is laid out in the free space between the leading and the trailing header clusters, so it can never overlap a button — it elides instead.
 - **Control Center sheet** (`Ctrl+4`): audio, screen-off, screenshot and notifications as a floating glass panel.
 - **Preferences sheet** (`Ctrl+,`): turn-screen-off, stay-awake, PipeWire audio, frame rate and bit-rate. The values live in `MirrorSession`, are persisted between sessions and feed the scrcpy command line.
@@ -94,7 +92,7 @@ sobre un **barrido de anchos de ventana de 620 a 1440 px** con varios títulos,
 lo que convierte cualquier regresión de geometría en un fallo de CI.
 
 Los componentes que sangran de forma intencionada (por ejemplo la insignia
-de notificación estilo macOS) se declaran exentos con la propiedad dinámica
+de notificación flotante) se declaran exentos con la propiedad dinámica
 `auditBleed: true`.
 
 ---

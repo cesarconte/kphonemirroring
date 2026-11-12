@@ -3,7 +3,7 @@
     SPDX-License-Identifier: GPL-3.0-or-later
 
     "Apps" catalogue rendered inside the mirrored device screen. It mirrors the
-    App Store "Apps" tab of macOS 27 Golden Gate and launches the selected
+    Golden Gate discovery "Apps" tab and launches the selected
     Android package through scrcpy.
 */
 

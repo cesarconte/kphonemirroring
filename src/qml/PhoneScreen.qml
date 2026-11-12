@@ -2,7 +2,7 @@
     SPDX-FileCopyrightText: 2026 Cesar
     SPDX-License-Identifier: GPL-3.0-or-later
 
-    Device screen chassis of the macOS 27 Android Phone Mirroring window.
+    Device screen chassis of the CachyOS Android Phone Mirroring window.
 
     The chassis is *hardware* (titanium bezel + punch-hole camera) and keeps a
     fixed dark finish on purpose: a real device screen never inherits the host

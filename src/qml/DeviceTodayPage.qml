@@ -3,7 +3,7 @@
     SPDX-License-Identifier: GPL-3.0-or-later
 
     "Today" discovery page rendered inside the mirrored device screen.
-    It reproduces the App Store "Today" layout of macOS 27 Golden Gate and acts
+    It reproduces the Golden Gate discovery layout and acts
     as the launcher surface for the Android applications handled by scrcpy.
 */
 
@@ -76,7 +76,7 @@ Flickable {
                     radius: 7.5
                     color: "#FF3B30"
 
-                    // The macOS style notification badge deliberately overlaps
+                    // The floating notification badge deliberately overlaps
                     // its avatar, so it is exempt from the layout audit.
                     property bool auditBleed: true
 

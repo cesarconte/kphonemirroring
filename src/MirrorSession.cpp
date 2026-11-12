@@ -81,7 +81,7 @@ QStringList MirrorSession::buildScrcpyArgs(const QString &serial,
         args << QString("--video-bit-rate=%1M").arg(bitrateMbps);
     }
 
-    // Modern macOS Sequoia style window title and hotkeys
+    // Modern desktop style window title and hotkeys
     const QString title = windowTitle.isEmpty() ? QStringLiteral("Phone Mirroring") : windowTitle;
     args << QString("--window-title=%1").arg(title);
     args << "--shortcut-mod=lalt";
@@ -274,7 +274,7 @@ void MirrorSession::openControlCenter()
     }
 }
 
-void MirrorSession::openSpotlight()
+void MirrorSession::openSearch()
 {
     runAdbShellCommand({"input", "keyevent", "84"});
 }

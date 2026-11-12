@@ -58,7 +58,7 @@ bool hasScrollableAncestor(QQuickItem *item)
 
 /**
  * Components that intentionally bleed out of their container (for instance a
- * macOS style notification badge overlapping its avatar) opt out of the
+ * floating notification badge overlapping its avatar) opt out of the
  * containment rule by declaring the `auditBleed` dynamic property.
  */
 bool declaresBleed(QQuickItem *item)

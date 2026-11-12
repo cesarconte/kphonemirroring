@@ -61,7 +61,7 @@ public Q_SLOTS:
     bool startMirroring(const QString &serial, const QString &windowTitle = QString());
     void stopMirroring();
 
-    // Golden Gate & Sequoia Quick Actions
+    // Golden Gate Quick Actions
     void sendHome();
     void sendAppSwitcher();
     void sendBack();
@@ -71,7 +71,7 @@ public Q_SLOTS:
     void sendExpandNotifications();
     void sendExpandSettings();
     void openControlCenter();
-    void openSpotlight();
+    void openSearch();
     void takeScreenshot();
 
     // Golden Gate Per-App Dynamic Window Size Memory
