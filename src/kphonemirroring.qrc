@@ -2,7 +2,15 @@
 <RCC version="1.0">
     <qresource prefix="/">
         <file>qml/Main.qml</file>
+        <file>qml/Sidebar.qml</file>
+        <file>qml/PhoneScreen.qml</file>
+        <file>qml/DeviceTodayPage.qml</file>
+        <file>qml/DeviceAppsPage.qml</file>
+        <file>qml/DeviceLivePage.qml</file>
+        <file>qml/BezelActionButton.qml</file>
         <file>qml/SequoiaToolbar.qml</file>
+        <file>qml/ControlCenterSheet.qml</file>
+        <file>qml/PreferencesSheet.qml</file>
         <file>resources/icons/kphonemirroring.svg</file>
     </qresource>
 </RCC>

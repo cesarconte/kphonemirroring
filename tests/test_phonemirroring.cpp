@@ -13,6 +13,8 @@ private Q_SLOTS:
     void testBuildScrcpyArgsDefaults();
     void testBuildScrcpyArgsCustom();
     void testGoldenGatePerAppWindowSizeMemory();
+    void testMirroringOptionsSettersAndClamping();
+    void testMirroringOptionsPersistAcrossInstances();
 };
 
 void TestPhoneMirroring::testParseAdbDevicesEmpty()
@@ -126,6 +128,77 @@ void TestPhoneMirroring::testGoldenGatePerAppWindowSizeMemory()
     QVERIFY(!session.controlCenterVisible());
     session.openControlCenter();
     QVERIFY(session.controlCenterVisible());
+}
+
+void TestPhoneMirroring::testMirroringOptionsSettersAndClamping()
+{
+    MirrorSession session;
+    QSignalSpy optionsSpy(&session, &MirrorSession::optionsChanged);
+
+    // Golden Gate defaults
+    QCOMPARE(session.turnScreenOff(), true);
+    QCOMPARE(session.stayAwake(), true);
+    QCOMPARE(session.audioEnabled(), true);
+    QCOMPARE(session.maxFps(), 60);
+    QCOMPARE(session.bitrateMbps(), 16);
+
+    // Toggling an option notifies exactly once
+    session.setAudioEnabled(false);
+    QCOMPARE(optionsSpy.count(), 1);
+    QCOMPARE(session.audioEnabled(), false);
+
+    // Setting the same value again is a no-op (no spurious notification)
+    session.setAudioEnabled(false);
+    QCOMPARE(optionsSpy.count(), 1);
+
+    // Out-of-range values are clamped to the canonical scrcpy boundaries
+    session.setMaxFps(5);
+    QCOMPARE(session.maxFps(), MirrorSession::clampMaxFps(5));
+    QCOMPARE(session.maxFps(), 15);
+
+    session.setMaxFps(1000);
+    QCOMPARE(session.maxFps(), 120);
+
+    session.setBitrateMbps(0);
+    QCOMPARE(session.bitrateMbps(), 4);
+
+    session.setBitrateMbps(999);
+    QCOMPARE(session.bitrateMbps(), 64);
+
+    // The options feed the scrcpy command line
+    const QStringList args = MirrorSession::buildScrcpyArgs("serial",
+                                                            session.turnScreenOff(),
+                                                            session.stayAwake(),
+                                                            session.audioEnabled(),
+                                                            session.maxFps(),
+                                                            session.bitrateMbps(),
+                                                            QStringLiteral("Device"));
+    QVERIFY(!args.contains("--audio-source=playback"));
+    QVERIFY(args.contains("--no-audio"));
+    QVERIFY(args.contains("--max-fps=120"));
+    QVERIFY(args.contains("--video-bit-rate=64M"));
+}
+
+void TestPhoneMirroring::testMirroringOptionsPersistAcrossInstances()
+{
+    {
+        MirrorSession session;
+        session.setMaxFps(30);
+        session.setBitrateMbps(8);
+        session.setTurnScreenOff(false);
+    }
+
+    // A brand new session restores the persisted Golden Gate options
+    MirrorSession restored;
+    QCOMPARE(restored.maxFps(), 30);
+    QCOMPARE(restored.bitrateMbps(), 8);
+    QCOMPARE(restored.turnScreenOff(), false);
+
+    // Restore the defaults so the persisted state stays neutral for the
+    // remaining test runs of the suite.
+    restored.setMaxFps(60);
+    restored.setBitrateMbps(16);
+    restored.setTurnScreenOff(true);
 }
 
 QTEST_MAIN(TestPhoneMirroring)

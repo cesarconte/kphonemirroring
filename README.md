@@ -1,8 +1,8 @@
 # Phone Mirroring (`kphonemirroring`)
 
-**macOS Sequoia iPhone Mirroring experience for Android on KDE Plasma 6 (Wayland / Qt6).**
+**macOS 27 "Golden Gate" iPhone Mirroring experience for Android on KDE Plasma 6 (Wayland / Qt6).**
 
-Designed to deliver the seamless continuity experience of macOS 15 Sequoia Phone Mirroring on Linux desktops with zero friction.
+Designed to deliver the seamless continuity experience of macOS Sequoia/Tahoe Phone Mirroring on Linux desktops with zero friction.
 
 ![Phone Mirroring Icon](src/resources/icons/kphonemirroring.svg)
 
@@ -10,25 +10,30 @@ Designed to deliver the seamless continuity experience of macOS 15 Sequoia Phone
 
 ## ✨ Features
 
-- **macOS Sequoia Phone Mirroring UI**: Frosted acrylic dark glass window, smartphone chassis preview with titanium bezels and punch-hole camera.
-- **Sequoia Floating Toolbar**:
-  - 🏠 **Home**: Simulates home swipe / button.
-  - 🗂️ **App Switcher**: Recent apps and multitasking.
-  - 🔒 **Lock**: Powers off or locks the device screen.
-  - 🔔 **Notifications**: Quick pull-down of Android notification shade.
-  - ⚙️ **Quick Settings**: Instant access to toggles.
-  - 📸 **Quick Screenshot**: One-click direct screenshot saved directly to `~/Imágenes`.
-  - 🔊 / 🔉 **Volume Controls**: Real-time volume adjustments.
-- **Dual Connection Mode**:
-  - **USB Mode**: Ultra-low latency, 60 FPS, battery charging.
-  - **Wi-Fi Mode**: 100% wireless mirroring without cables via ADB TCP/IP.
-- **Privacy & Power Saver**:
-  - Keeps the physical phone screen turned off while interacting on the desktop (`--turn-screen-off`).
-  - Keeps the phone awake while connected (`--stay-awake`).
-- **High-Fidelity Audio**:
-  - Real-time stereo audio routed through PipeWire / PulseAudio into your PC speakers or headphones.
-- **Xiaomi HyperOS & Android Integration**:
-  - Native detection of device model, Android release, battery level, charging status, and local Wi-Fi IP address.
+### Golden Gate / Liquid Glass (CachyOS.UI)
+
+- **Liquid Glass window frame**: translucent `CachyTheme.windowBackground`, KWin blur region (`CachyWindowBlur`), gloss sheen gradient and the continuous 1 px specular rim. No opaque colour overrides the glass.
+- **Canonical macOS chrome**: 44 px title bar with the hard 1 px divider, traffic lights at 18 px with the specular crescent and the elastic 1.18× press, centred title, header actions anchored at 18 px and the **Preferences gear always last** (right-most).
+- **Edge-to-edge sidebar** (`232 px`) with the brand block, the live device list (colourful squircle badges, bold selection, live battery counter), the session status card and the mirroring actions.
+- **Unified 20 px squircle** (`CachyTheme.radiusWindow`) and 18 px canonical perimeter margin.
+- **Light/Dark aware**: every chrome colour comes from the `CachyTheme` singleton; the glass tint follows the global *Liquid Glass Opacity* setting.
+
+### Mirroring
+
+- **Device chassis**: titanium bezel + punch-hole camera hosting the mirrored screen.
+- **Host-side quick actions** (`SequoiaToolbar`): 🏠 Inicio · 🗂️ Multitarea · 🔒 Bloquear · 🔔 Avisos · ⚙️ Ajustes · 📸 Captura · 🔉/🔊 Volumen.
+- **Golden Gate bezel cluster** (top-right): *Home Screen* `Ctrl+1`, *App Switcher* `Ctrl+2`, *Spotlight* `Ctrl+3`, *Control Center* `Ctrl+4`.
+- **Control Center sheet** (`Ctrl+4`): audio, screen-off, screenshot and notifications as a floating glass panel.
+- **Preferences sheet** (`Ctrl+,`): turn-screen-off, stay-awake, PipeWire audio, frame rate and bit-rate. The values live in `MirrorSession`, are persisted between sessions and feed the scrcpy command line.
+- **Per-app dynamic window size memory**: every Android app remembers its own window geometry; *Home Screen* restores the compact portrait size.
+
+### Connectivity & power
+
+- **USB mode**: ultra-low latency, 60 FPS, battery charging.
+- **Wi-Fi mode**: 100% wireless mirroring without cables via ADB TCP/IP.
+- **Privacy & Power Saver**: keeps the physical phone screen turned off while interacting on the desktop (`--turn-screen-off`) and keeps the phone awake while connected (`--stay-awake`).
+- **High-fidelity audio**: the stream is captured from the default PipeWire/WirePlumber source so the active **EasyEffects** DSP chain (noise cancellation, noise gate, EQ) and the configured virtual sinks are honoured. No physical `hw:*` device is ever hardcoded.
+
 
 ---
 
@@ -51,6 +56,18 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 ctest --test-dir build --output-on-failure
 sudo cmake --install build
+```
+
+### Dependencia del sistema de diseño
+
+La interfaz consume el módulo QML `CachyOS.UI` (Liquid Glass, `CachyWindow`,
+`CachyTheme`…). Se instala con:
+
+```bash
+cd ../cachyos-ui
+cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/
+cmake --build build -j"$(nproc)"
+DESTDIR=$HOME/.local cmake --install build
 ```
 
 ---

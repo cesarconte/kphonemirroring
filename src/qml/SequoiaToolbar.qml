@@ -1,135 +1,69 @@
+/*
+    SPDX-FileCopyrightText: 2026 Cesar
+    SPDX-License-Identifier: GPL-3.0-or-later
+
+    Host-side quick actions for the scrcpy session. It lives *outside* of the
+    device screen (it belongs to the host application, not to the phone), so it
+    is rendered with the canonical Liquid Glass tokens of `CachyOS.UI`.
+*/
+
+pragma ComponentBehavior: Bound
+
 import QtQuick
-import QtQuick.Controls.Basic as QQC2
+import QtQuick.Controls
 import QtQuick.Layouts
+import CachyOS.UI
 
 Rectangle {
     id: root
-    height: 48
-    radius: 24
-    color: "#D91C1C1E"
-    border.color: "#3A3A3C"
+
+    implicitHeight: 44
+    radius: CachyTheme.radiusLarge
+    color: CachyTheme.cardBackground
     border.width: 1
+    border.color: CachyTheme.specularBorder
 
     RowLayout {
-        anchors.centerIn: parent
-        spacing: 6
+        anchors.fill: parent
+        anchors.leftMargin: 8
+        anchors.rightMargin: 8
+        spacing: 4
 
-        // Home Button
-        ToolPillButton {
-            iconText: "􀎟" // SF / Unicode fallback
-            label: "Inicio"
-            fallbackSymbol: "🏠"
-            tooltipText: "Pantalla de inicio (Home)"
-            onClicked: mirrorSession.sendHome()
+        Item { Layout.fillWidth: true }
+
+        Repeater {
+            model: [
+                { glyph: "🏠", label: "Inicio", tip: "Pantalla de inicio (Home)", action: "home" },
+                { glyph: "🗂️", label: "Multitarea", tip: "Aplicaciones recientes (App Switcher)", action: "switcher" },
+                { glyph: "🔒", label: "Bloquear", tip: "Bloquear / apagar la pantalla", action: "lock" },
+                { glyph: "🔔", label: "Avisos", tip: "Panel de notificaciones", action: "notifications" },
+                { glyph: "⚙️", label: "Ajustes", tip: "Ajustes rápidos de Android", action: "settings" },
+                { glyph: "📸", label: "Captura", tip: "Capturar pantalla y guardar en Imágenes", action: "screenshot" },
+                { glyph: "🔉", label: "Vol −", tip: "Bajar volumen", action: "volDown" },
+                { glyph: "🔊", label: "Vol +", tip: "Subir volumen", action: "volUp" }
+            ]
+
+            CachyToolbarButton {
+                required property var modelData
+
+                text: modelData.glyph
+                tooltipText: modelData.tip
+
+                onClicked: {
+                    switch (modelData.action) {
+                    case "home": mirrorSession.sendHome(); break;
+                    case "switcher": mirrorSession.sendAppSwitcher(); break;
+                    case "lock": mirrorSession.sendLock(); break;
+                    case "notifications": mirrorSession.sendExpandNotifications(); break;
+                    case "settings": mirrorSession.sendExpandSettings(); break;
+                    case "screenshot": mirrorSession.takeScreenshot(); break;
+                    case "volDown": mirrorSession.sendVolumeDown(); break;
+                    case "volUp": mirrorSession.sendVolumeUp(); break;
+                    }
+                }
+            }
         }
 
-        // App Switcher
-        ToolPillButton {
-            iconText: "􀏧"
-            label: "Multitarea"
-            fallbackSymbol: "🗂️"
-            tooltipText: "Aplicaciones recientes (App Switcher)"
-            onClicked: mirrorSession.sendAppSwitcher()
-        }
-
-        // Lock / Screen Off
-        ToolPillButton {
-            iconText: "􀎠"
-            label: "Bloquear"
-            fallbackSymbol: "🔒"
-            tooltipText: "Bloquear / Apagar pantalla"
-            onClicked: mirrorSession.sendLock()
-        }
-
-        Rectangle {
-            width: 1
-            height: 20
-            color: "#3A3A3C"
-            Layout.alignment: Qt.AlignVCenter
-        }
-
-        // Notifications
-        ToolPillButton {
-            iconText: "􀝖"
-            label: "Avisos"
-            fallbackSymbol: "🔔"
-            tooltipText: "Panel de notificaciones"
-            onClicked: mirrorSession.sendExpandNotifications()
-        }
-
-        // Quick Settings
-        ToolPillButton {
-            iconText: "􀍟"
-            label: "Ajustes"
-            fallbackSymbol: "⚙️"
-            tooltipText: "Ajustes rápidos de Android"
-            onClicked: mirrorSession.sendExpandSettings()
-        }
-
-        // Screenshot
-        ToolPillButton {
-            iconText: "􀌞"
-            label: "Captura"
-            fallbackSymbol: "📸"
-            tooltipText: "Capturar pantalla y guardar en Imágenes"
-            onClicked: mirrorSession.takeScreenshot()
-        }
-
-        Rectangle {
-            width: 1
-            height: 20
-            color: "#3A3A3C"
-            Layout.alignment: Qt.AlignVCenter
-        }
-
-        // Vol -
-        ToolPillButton {
-            iconText: "􀊦"
-            label: "Vol -"
-            fallbackSymbol: "🔉"
-            tooltipText: "Bajar volumen"
-            onClicked: mirrorSession.sendVolumeDown()
-        }
-
-        // Vol +
-        ToolPillButton {
-            iconText: "􀊨"
-            label: "Vol +"
-            fallbackSymbol: "🔊"
-            tooltipText: "Subir volumen"
-            onClicked: mirrorSession.sendVolumeUp()
-        }
-    }
-
-    component ToolPillButton: Rectangle {
-        id: btn
-        property string iconText: ""
-        property string fallbackSymbol: ""
-        property string label: ""
-        property string tooltipText: ""
-        signal clicked()
-
-        implicitWidth: 36
-        implicitHeight: 36
-        radius: 18
-        color: mouseArea.containsPress ? "#48484A" : (mouseArea.containsMouse ? "#3A3A3C" : "transparent")
-
-        Text {
-            anchors.centerIn: parent
-            text: btn.fallbackSymbol
-            font.pixelSize: 15
-        }
-
-        MouseArea {
-            id: mouseArea
-            anchors.fill: parent
-            hoverEnabled: true
-            cursorShape: Qt.PointingHandCursor
-            onClicked: btn.clicked()
-        }
-
-        QQC2.ToolTip.visible: mouseArea.containsMouse && btn.tooltipText.length > 0
-        QQC2.ToolTip.text: btn.tooltipText
-        QQC2.ToolTip.delay: 400
+        Item { Layout.fillWidth: true }
     }
 }

@@ -11,6 +11,8 @@ MirrorSession::MirrorSession(QObject *parent)
 {
     m_scrcpyProcess = new QProcess(this);
 
+    loadOptions();
+
     connect(m_scrcpyProcess, &QProcess::started, this, [this]() {
         m_errorMessage.clear();
         Q_EMIT errorMessageChanged(m_errorMessage);
@@ -87,13 +89,7 @@ QStringList MirrorSession::buildScrcpyArgs(const QString &serial,
     return args;
 }
 
-bool MirrorSession::startMirroring(const QString &serial,
-                                   bool turnScreenOff,
-                                   bool stayAwake,
-                                   bool audio,
-                                   int maxFps,
-                                   int bitrateMbps,
-                                   const QString &windowTitle)
+bool MirrorSession::startMirroring(const QString &serial, const QString &windowTitle)
 {
     if (isRunning()) {
         stopMirroring();
@@ -102,7 +98,7 @@ bool MirrorSession::startMirroring(const QString &serial,
     m_activeSerial = serial;
     Q_EMIT activeSerialChanged(m_activeSerial);
 
-    const QStringList args = buildScrcpyArgs(serial, turnScreenOff, stayAwake, audio, maxFps, bitrateMbps, windowTitle);
+    const QStringList args = buildScrcpyArgs(serial, m_turnScreenOff, m_stayAwake, m_audioEnabled, m_maxFps, m_bitrateMbps, windowTitle);
 
     m_scrcpyProcess->start("scrcpy", args);
     return true;
@@ -177,6 +173,97 @@ void MirrorSession::setControlCenterVisible(bool visible)
     }
     m_controlCenterVisible = visible;
     Q_EMIT controlCenterVisibleChanged();
+}
+
+// ===========================================================================
+// Golden Gate mirroring options
+// ===========================================================================
+
+int MirrorSession::clampMaxFps(int fps)
+{
+    return qBound(15, fps, 120);
+}
+
+int MirrorSession::clampBitrateMbps(int mbps)
+{
+    return qBound(4, mbps, 64);
+}
+
+void MirrorSession::setTurnScreenOff(bool enabled)
+{
+    if (m_turnScreenOff == enabled) {
+        return;
+    }
+    m_turnScreenOff = enabled;
+    saveOptions();
+    Q_EMIT optionsChanged();
+}
+
+void MirrorSession::setStayAwake(bool enabled)
+{
+    if (m_stayAwake == enabled) {
+        return;
+    }
+    m_stayAwake = enabled;
+    saveOptions();
+    Q_EMIT optionsChanged();
+}
+
+void MirrorSession::setAudioEnabled(bool enabled)
+{
+    if (m_audioEnabled == enabled) {
+        return;
+    }
+    m_audioEnabled = enabled;
+    saveOptions();
+    Q_EMIT optionsChanged();
+}
+
+void MirrorSession::setMaxFps(int fps)
+{
+    const int clamped = clampMaxFps(fps);
+    if (m_maxFps == clamped) {
+        return;
+    }
+    m_maxFps = clamped;
+    saveOptions();
+    Q_EMIT optionsChanged();
+}
+
+void MirrorSession::setBitrateMbps(int mbps)
+{
+    const int clamped = clampBitrateMbps(mbps);
+    if (m_bitrateMbps == clamped) {
+        return;
+    }
+    m_bitrateMbps = clamped;
+    saveOptions();
+    Q_EMIT optionsChanged();
+}
+
+void MirrorSession::loadOptions()
+{
+    QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
+    settings.beginGroup(QStringLiteral("Mirroring"));
+    m_turnScreenOff = settings.value(QStringLiteral("turnScreenOff"), true).toBool();
+    m_stayAwake = settings.value(QStringLiteral("stayAwake"), true).toBool();
+    m_audioEnabled = settings.value(QStringLiteral("audio"), true).toBool();
+    m_maxFps = clampMaxFps(settings.value(QStringLiteral("maxFps"), 60).toInt());
+    m_bitrateMbps = clampBitrateMbps(settings.value(QStringLiteral("bitrateMbps"), 16).toInt());
+    settings.endGroup();
+}
+
+void MirrorSession::saveOptions()
+{
+    QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
+    settings.beginGroup(QStringLiteral("Mirroring"));
+    settings.setValue(QStringLiteral("turnScreenOff"), m_turnScreenOff);
+    settings.setValue(QStringLiteral("stayAwake"), m_stayAwake);
+    settings.setValue(QStringLiteral("audio"), m_audioEnabled);
+    settings.setValue(QStringLiteral("maxFps"), m_maxFps);
+    settings.setValue(QStringLiteral("bitrateMbps"), m_bitrateMbps);
+    settings.endGroup();
+    settings.sync();
 }
 
 void MirrorSession::openControlCenter()

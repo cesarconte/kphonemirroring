@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QCommandLineParser>
+#include <QQuickStyle>
 #include <QQuickWindow>
 #include <QTimer>
 #include <QIcon>
@@ -10,8 +11,6 @@
 
 int main(int argc, char *argv[])
 {
-    qputenv("QT_QUICK_CONTROLS_STYLE", "Basic");
-
     QGuiApplication app(argc, argv);
     app.setApplicationName("kphonemirroring");
     app.setApplicationDisplayName("Phone Mirroring");
@@ -19,6 +18,12 @@ int main(int argc, char *argv[])
     app.setOrganizationDomain("cesar.org");
     app.setDesktopFileName("org.cesar.kphonemirroring");
     app.setWindowIcon(QIcon(":/resources/icons/kphonemirroring.svg"));
+
+    // Golden Gate parity: the application inherits the Plasma desktop style so
+    // menus, tooltips and scrollbars match the rest of the CachyOS.UI ecosystem.
+    if (qEnvironmentVariableIsEmpty("QT_QUICK_CONTROLS_STYLE")) {
+        QQuickStyle::setStyle(QStringLiteral("org.kde.desktop"));
+    }
 
     QCommandLineParser parser;
     parser.addHelpOption();
