@@ -1,5 +1,8 @@
 #include <QTest>
 #include <QSignalSpy>
+#include <QFile>
+#include <QSettings>
+#include <QStandardPaths>
 #include "../src/DeviceManager.h"
 #include "../src/MirrorSession.h"
 
@@ -7,6 +10,7 @@ class TestPhoneMirroring : public QObject {
     Q_OBJECT
 
 private Q_SLOTS:
+    void initTestCase();
     void testParseAdbDevicesEmpty();
     void testParseAdbDevicesUsbAndWifi();
     void testParseAdbDevicesUnauthorized();
@@ -16,6 +20,17 @@ private Q_SLOTS:
     void testMirroringOptionsSettersAndClamping();
     void testMirroringOptionsPersistAcrossInstances();
 };
+
+void TestPhoneMirroring::initTestCase()
+{
+    // Isolate the suite from the real user configuration and guarantee a clean
+    // starting point: the mirroring options are persisted on disk, so without
+    // this the assertions would depend on the state left by a previous run.
+    QStandardPaths::setTestModeEnabled(true);
+
+    QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
+    QFile::remove(settings.fileName());
+}
 
 void TestPhoneMirroring::testParseAdbDevicesEmpty()
 {
@@ -199,6 +214,8 @@ void TestPhoneMirroring::testMirroringOptionsPersistAcrossInstances()
     restored.setMaxFps(60);
     restored.setBitrateMbps(16);
     restored.setTurnScreenOff(true);
+    restored.setStayAwake(true);
+    restored.setAudioEnabled(true);
 }
 
 QTEST_MAIN(TestPhoneMirroring)
