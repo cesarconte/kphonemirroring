@@ -1,3 +1,21 @@
+# SPDX-FileCopyrightText: 2026 Cesar
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# Golden Gate layout audit.
+#
+# The window is rendered offscreen at several sizes and in every UI state,
+# and the resulting QQuickItem tree is audited for the classic design
+# defects: protruding items, items sticking out of the window, texts cut
+# without elision and the window title overlapping the header clusters.
+#
+# The auditor itself lives in the design system (CachyOS.UI) so that every
+# application of the ecosystem shares the very same invariants.
+
+include(CTest)
+
+# ---------------------------------------------------------------------------
+# Unit tests of the backend (device discovery, scrcpy arguments, options)
+# ---------------------------------------------------------------------------
 add_executable(test_phonemirroring
     test_phonemirroring.cpp
     ../src/DeviceManager.cpp
@@ -12,12 +30,11 @@ target_link_libraries(test_phonemirroring PRIVATE
 
 add_test(NAME test_phonemirroring COMMAND test_phonemirroring)
 
-# Golden Gate layout audit: renders the real QML scene offscreen and asserts
-# that no item protrudes, gets clipped or overlaps another one.
+# ---------------------------------------------------------------------------
+# Golden Gate layout audit
+# ---------------------------------------------------------------------------
 add_executable(test_layout_audit
     test_layout_audit.cpp
-    LayoutAuditor.cpp
-    LayoutAuditor.h
     ../src/DeviceManager.cpp
     ../src/MirrorSession.cpp
     ../src/kphonemirroring.qrc
@@ -31,6 +48,7 @@ target_link_libraries(test_layout_audit PRIVATE
     Qt6::Quick
     Qt6::QuickControls2
     Qt6::Test
+    CachyOSUITesting::CachyOSUITesting
 )
 
 add_test(NAME test_layout_audit COMMAND test_layout_audit)
