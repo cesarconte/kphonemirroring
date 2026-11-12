@@ -72,9 +72,7 @@ Item {
                 DeviceAppsPage {
                     onRequestTab: (tab) => root.activeTab = tab
                 }
-                DeviceLivePage {
-                    onRequestTab: (tab) => root.activeTab = tab
-                }
+                DeviceLivePage {}
             }
 
             // -----------------------------------------------------------------

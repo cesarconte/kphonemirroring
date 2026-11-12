@@ -15,8 +15,6 @@ import QtQuick.Layouts
 Item {
     id: root
 
-    signal requestTab(string tab)
-
     Rectangle {
         id: livePanel
         anchors.fill: parent

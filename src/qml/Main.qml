@@ -59,7 +59,6 @@ CachyWindow {
 
     readonly property int viewportWidth: root.width - (root.showSidebar ? root.sidebarWidth : 0)
     readonly property int viewportHeight: root.height - CachyTheme.titleBarHeight - (CachyTheme.marginWindow * 2)
-    readonly property bool isWideMultiColumn: root.viewportWidth >= 620
 
     // =========================================================================
     // 2. KEYBOARD SHORTCUTS (macOS 27 iPhone Mirroring parity)
