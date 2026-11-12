@@ -35,7 +35,7 @@ ColumnLayout {
         Text {
             Layout.fillWidth: true
             Layout.minimumWidth: 0
-            text: "Phone Mirroring"
+            text: "Android Mirroring"
             font.pixelSize: 13
             font.weight: Font.Bold
             color: CachyTheme.textPrimary

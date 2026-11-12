@@ -2,7 +2,7 @@
     SPDX-FileCopyrightText: 2026 Cesar
     SPDX-License-Identifier: GPL-3.0-or-later
 
-    macOS 27 "Golden Gate" iPhone/Android Mirroring — KDE Plasma 6 (Wayland).
+    macOS 27 "Golden Gate" Android Phone Mirroring — KDE Plasma 6 (Wayland).
 
     Design contract (cachyos-ui / DESIGN_SYSTEM.md):
       * Liquid Glass frame: NO opaque `backgroundColor` override, the window keeps
@@ -28,7 +28,7 @@ CachyWindow {
     // =========================================================================
     // 0. GOLDEN GATE CANONICAL GEOMETRY
     // =========================================================================
-    title: "iPhone & Android Mirroring"
+    title: "Android Mirroring"
     width: 980
     height: 680
     minimumWidth: 620
@@ -61,7 +61,7 @@ CachyWindow {
     readonly property int viewportHeight: root.height - CachyTheme.titleBarHeight - (CachyTheme.marginWindow * 2)
 
     // =========================================================================
-    // 2. KEYBOARD SHORTCUTS (macOS 27 iPhone Mirroring parity)
+    // 2. KEYBOARD SHORTCUTS (macOS 27 Phone Mirroring parity)
     // =========================================================================
     Shortcut {
         sequence: "Ctrl+1"

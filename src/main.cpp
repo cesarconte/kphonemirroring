@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
     app.setApplicationName("kphonemirroring");
-    app.setApplicationDisplayName("Phone Mirroring");
+    app.setApplicationDisplayName("Android Mirroring");
     app.setOrganizationName("cesarconte");
     app.setOrganizationDomain("cesar.org");
     app.setDesktopFileName("org.cesar.kphonemirroring");

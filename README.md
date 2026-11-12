@@ -1,8 +1,10 @@
 # Phone Mirroring (`kphonemirroring`)
 
-**macOS 27 "Golden Gate" iPhone Mirroring experience for Android on KDE Plasma 6 (Wayland / Qt6).**
+**macOS 27 "Golden Gate" Android Phone Mirroring experience on KDE Plasma 6 (Wayland / Qt6).**
 
 Designed to deliver the seamless continuity experience of macOS Sequoia/Tahoe Phone Mirroring on Linux desktops with zero friction.
+
+The whole telephony experience is oriented exclusively to **Android** devices driven through `scrcpy`.
 
 ![Phone Mirroring Icon](src/resources/icons/kphonemirroring.svg)
 
@@ -23,6 +25,7 @@ Designed to deliver the seamless continuity experience of macOS Sequoia/Tahoe Ph
 - **Device chassis**: titanium bezel + punch-hole camera hosting the mirrored screen.
 - **Host-side quick actions** (`SequoiaToolbar`): 🏠 Inicio · 🗂️ Multitarea · 🔒 Bloquear · 🔔 Avisos · ⚙️ Ajustes · 📸 Captura · 🔉/🔊 Volumen.
 - **Golden Gate bezel cluster** (top-right): *Home Screen* `Ctrl+1`, *App Switcher* `Ctrl+2`, *Spotlight* `Ctrl+3`, *Control Center* `Ctrl+4`.
+- **Title band guarantee**: the window title is laid out in the free space between the leading and the trailing header clusters, so it can never overlap a button — it elides instead.
 - **Control Center sheet** (`Ctrl+4`): audio, screen-off, screenshot and notifications as a floating glass panel.
 - **Preferences sheet** (`Ctrl+,`): turn-screen-off, stay-awake, PipeWire audio, frame rate and bit-rate. The values live in `MirrorSession`, are persisted between sessions and feed the scrcpy command line.
 - **Per-app dynamic window size memory**: every Android app remembers its own window geometry; *Home Screen* restores the compact portrait size.
@@ -69,6 +72,30 @@ cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/
 cmake --build build -j"$(nproc)"
 DESTDIR=$HOME/.local cmake --install build
 ```
+
+---
+
+## 🧪 Auditoría de layout (`test_layout_audit`)
+
+Además de los tests unitarios, la suite monta la escena QML real *offscreen*
+y analiza el árbol de `QQuickItem` en busca de los defectos de diseño que
+nunca deben llegar al usuario:
+
+| Regla | Detecta |
+| :--- | :--- |
+| `protrusion` | Un elemento que sobresale de su contenedor. |
+| `out-of-window` | Un elemento que sobresale de la ventana. |
+| `text-clipping` | Un texto que se recorta sin usar la elipsis. |
+| `header-overlap` | El título de la ventana solapando los grupos de la cabecera. |
+
+La auditoría se ejecuta sobre **todos los estados de la interfaz** (cada
+pestaña, la barra lateral plegada, el Centro de Control y las Preferencias) y
+sobre un **barrido de anchos de ventana de 620 a 1440 px** con varios títulos,
+lo que convierte cualquier regresión de geometría en un fallo de CI.
+
+Los componentes que sangran de forma intencionada (por ejemplo la insignia
+de notificación estilo macOS) se declaran exentos con la propiedad dinámica
+`auditBleed: true`.
 
 ---
 

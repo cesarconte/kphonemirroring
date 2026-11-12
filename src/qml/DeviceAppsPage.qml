@@ -11,6 +11,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import CachyOS.UI
 
 Flickable {
     id: root
@@ -64,7 +65,9 @@ Flickable {
         Rectangle {
             Layout.fillWidth: true
             Layout.minimumWidth: 0
-            implicitHeight: gridColumn.implicitHeight + 28
+            // The height must account for the vertical padding of the inner
+            // column, otherwise the content overflows the card by a few pixels.
+            implicitHeight: gridColumn.implicitHeight + (CachyTheme.marginCard * 2)
             radius: 18
             color: "#F5F5F7"
             border.width: 1
@@ -73,7 +76,7 @@ Flickable {
             ColumnLayout {
                 id: gridColumn
                 anchors.fill: parent
-                anchors.margins: 16
+                anchors.margins: CachyTheme.marginCard
                 spacing: 14
 
                 Text {

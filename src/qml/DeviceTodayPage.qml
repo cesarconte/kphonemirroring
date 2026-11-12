@@ -11,6 +11,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import CachyOS.UI
 
 Flickable {
     id: root
@@ -74,6 +75,10 @@ Flickable {
                     height: 15
                     radius: 7.5
                     color: "#FF3B30"
+
+                    // The macOS style notification badge deliberately overlaps
+                    // its avatar, so it is exempt from the layout audit.
+                    property bool auditBleed: true
 
                     Text {
                         anchors.centerIn: parent
@@ -323,7 +328,9 @@ Flickable {
         Rectangle {
             Layout.fillWidth: true
             Layout.minimumWidth: 0
-            implicitHeight: favouritesColumn.implicitHeight + 28
+            // The height must account for the vertical padding of the inner
+            // column, otherwise the content overflows the card by a few pixels.
+            implicitHeight: favouritesColumn.implicitHeight + (CachyTheme.marginCard * 2)
             radius: 18
             color: "#F5F5F7"
             border.width: 1
@@ -332,7 +339,7 @@ Flickable {
             ColumnLayout {
                 id: favouritesColumn
                 anchors.fill: parent
-                anchors.margins: 16
+                anchors.margins: CachyTheme.marginCard
                 spacing: 12
 
                 ColumnLayout {
@@ -353,7 +360,7 @@ Flickable {
                     Text {
                         Layout.fillWidth: true
                         Layout.minimumWidth: 0
-                        text: "Essential iPhone Games & Mirroring"
+                        text: "Essential Android Games & Mirroring"
                         font.pixelSize: 18
                         font.weight: Font.Bold
                         color: "#111114"
