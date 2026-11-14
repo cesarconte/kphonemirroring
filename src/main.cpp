@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
     app.setOrganizationName("cesarconte");
     app.setOrganizationDomain("cesar.org");
     app.setDesktopFileName("org.cesar.kphonemirroring");
-    app.setWindowIcon(QIcon(":/resources/icons/kphonemirroring.svg"));
+    app.setWindowIcon(QIcon::fromTheme("kphonemirroring", QIcon(":/resources/icons/kphonemirroring.svg")));
 
     // Golden Gate parity: the application inherits the Plasma desktop style so
     // menus, tooltips and scrollbars match the rest of the CachyOS.UI ecosystem.
