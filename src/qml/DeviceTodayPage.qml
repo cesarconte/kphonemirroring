@@ -60,10 +60,12 @@ Flickable {
                     GradientStop { position: 1.0; color: "#28CD56" }
                 }
 
-                Text {
+                CachyIcon {
                     anchors.centerIn: parent
-                    text: "😊"
-                    font.pixelSize: 18
+                    name: "user-identity"
+                    size: 20
+                    colored: false
+                    color: "#FFFFFF"
                 }
 
                 Rectangle {
@@ -124,10 +126,9 @@ Flickable {
 
                         Row {
                             anchors.centerIn: parent
-                            spacing: 12
-                            Text { text: "🏹"; font.pixelSize: 44 }
-                            Text { text: "🛡️"; font.pixelSize: 48 }
-                            Text { text: "⚔️"; font.pixelSize: 44 }
+                            spacing: 16
+                            CachyIcon { name: "input-gaming"; size: 48; colored: false; color: "#FFFFFF" }
+                            CachyIcon { name: "applications-games"; size: 48; colored: false; color: "#FFFFFF" }
                         }
                     }
 
@@ -180,7 +181,7 @@ Flickable {
                                 Layout.preferredHeight: 34
                                 radius: 8
                                 color: "#2E1F3B"
-                                Text { anchors.centerIn: parent; text: "🎯"; font.pixelSize: 18 }
+                                CachyIcon { anchors.centerIn: parent; name: "input-gaming"; size: 18; colored: false; color: "#FFFFFF" }
                             }
 
                             ColumnLayout {
@@ -259,10 +260,11 @@ Flickable {
                             border.width: 1
                             border.color: "#E5E5EA"
 
-                            Text {
+                            CachyIcon {
                                 anchors.centerIn: parent
-                                text: "❂"
-                                font.pixelSize: 38
+                                name: "kity-symbolic"
+                                size: 38
+                                colored: false
                                 color: "#111114"
                             }
                         }
@@ -377,10 +379,10 @@ Flickable {
 
                     Repeater {
                         model: [
-                            { id: "pokemongo", title: "Pokémon GO", sub: "Epic AR adventure & online RPG", action: "Open", icon: "🔴", pkg: "com.nianticlabs.pokemongo" },
-                            { id: "genshin", title: "Genshin Impact", sub: "Anime Action RPG", action: "Get", icon: "✨", pkg: "com.miHoYo.GenshinImpact" },
-                            { id: "minecraft", title: "Minecraft: Play with Friends", sub: "Create, explore and survive!", action: "€6.99", icon: "🟩", pkg: "com.mojang.minecraftpe" },
-                            { id: "scrcpy_live", title: deviceManager.hasDevice ? deviceManager.selectedDevice.name : "Live Screen Mirroring", sub: mirrorSession.isRunning ? "Active scrcpy session" : "Launch real scrcpy video & audio", action: mirrorSession.isRunning ? "Stop" : "Mirror", icon: "📱", pkg: "" }
+                            { id: "pokemongo", title: "Pokémon GO", sub: "Epic AR adventure & online RPG", action: "Open", iconName: "applications-games", pkg: "com.nianticlabs.pokemongo" },
+                            { id: "genshin", title: "Genshin Impact", sub: "Anime Action RPG", action: "Get", iconName: "input-gaming", pkg: "com.miHoYo.GenshinImpact" },
+                            { id: "minecraft", title: "Minecraft: Play with Friends", sub: "Create, explore and survive!", action: "€6.99", iconName: "package-x-generic", pkg: "com.mojang.minecraftpe" },
+                            { id: "scrcpy_live", title: deviceManager.hasDevice ? deviceManager.selectedDevice.name : "Live Screen Mirroring", sub: mirrorSession.isRunning ? "Active scrcpy session" : "Launch real scrcpy video & audio", action: mirrorSession.isRunning ? "Stop" : "Mirror", iconName: "smartphone", pkg: "" }
                         ]
 
                         RowLayout {
@@ -396,7 +398,13 @@ Flickable {
                                 color: "#FFFFFF"
                                 border.width: 1
                                 border.color: "#E5E5EA"
-                                Text { anchors.centerIn: parent; text: modelData.icon; font.pixelSize: 20 }
+                                CachyIcon {
+                                    anchors.centerIn: parent
+                                    name: modelData.iconName
+                                    size: 22
+                                    colored: false
+                                    color: "#111114"
+                                }
                             }
 
                             ColumnLayout {

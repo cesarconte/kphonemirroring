@@ -131,10 +131,8 @@ CachyWindow {
             spacing: 8
 
             // Sidebar visibility toggle (collapsible sidebar)
-            CachyToolbarButton {
-                text: root.showSidebar ? "◧" : "◨"
-                tooltipText: root.showSidebar ? "Ocultar la barra lateral" : "Mostrar la barra lateral"
-                onClicked: root.showSidebar = !root.showSidebar
+            CachySidebarToggleButton {
+                targetWindow: root
             }
 
             Rectangle {
@@ -160,40 +158,40 @@ CachyWindow {
                     color: CachyTheme.textPrimary
                 }
 
-                QQC2.Menu {
+                CachyMenu {
                     id: goldenGateViewMenu
 
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "Home Screen\tCtrl+1"
                         onTriggered: {
                             root.activeTab = "today";
                             mirrorSession.returnToHomeScreen();
                         }
                     }
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "App Switcher\tCtrl+2"
                         onTriggered: mirrorSession.sendAppSwitcher()
                     }
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "Búsqueda\tCtrl+3"
                         onTriggered: mirrorSession.openSearch()
                     }
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "Control Center\tCtrl+4"
                         onTriggered: mirrorSession.openControlCenter()
                     }
 
-                    QQC2.MenuSeparator {}
+                    CachyMenuSeparator {}
 
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "Compact Portrait Size (440×700)"
                         onTriggered: mirrorSession.returnToHomeScreen()
                     }
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "Multi-Column Expanded Size (780×620)"
                         onTriggered: mirrorSession.openApp("today", "Today")
                     }
-                    QQC2.MenuItem {
+                    CachyMenuItem {
                         text: "Preferencias…\tCtrl+,"
                         onTriggered: root.preferencesVisible = !root.preferencesVisible
                     }
@@ -245,7 +243,7 @@ CachyWindow {
             }
 
             CachyToolbarButton {
-                text: "⚙"
+                iconName: "configure"
                 tooltipText: "Preferencias de duplicación (Ctrl+,)"
                 onClicked: {
                     mirrorSession.controlCenterVisible = false;
@@ -264,7 +262,7 @@ CachyWindow {
             anchors.verticalCenter: parent.verticalCenter
 
             CachyToolbarButton {
-                text: "↻"
+                iconName: "view-refresh"
                 tooltipText: "Buscar dispositivos conectados (ADB)"
                 onClicked: deviceManager.refresh()
             }

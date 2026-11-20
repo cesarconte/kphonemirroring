@@ -150,7 +150,8 @@ Rectangle {
         }
     }
 
-    ToolTip.visible: hoverHandler.hovered && root.tooltipText.length > 0
-    ToolTip.text: root.tooltipText
-    ToolTip.delay: 450
+    CachyTooltip {
+        visible: hoverHandler.hovered && root.tooltipText.length > 0
+        text: root.tooltipText
+    }
 }

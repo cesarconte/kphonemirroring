@@ -33,20 +33,20 @@ Rectangle {
 
         Repeater {
             model: [
-                { glyph: "🏠", label: "Inicio", tip: "Pantalla de inicio (Home)", action: "home" },
-                { glyph: "🗂️", label: "Multitarea", tip: "Aplicaciones recientes (App Switcher)", action: "switcher" },
-                { glyph: "🔒", label: "Bloquear", tip: "Bloquear / apagar la pantalla", action: "lock" },
-                { glyph: "🔔", label: "Avisos", tip: "Panel de notificaciones", action: "notifications" },
-                { glyph: "⚙️", label: "Ajustes", tip: "Ajustes rápidos de Android", action: "settings" },
-                { glyph: "📸", label: "Captura", tip: "Capturar pantalla y guardar en Imágenes", action: "screenshot" },
-                { glyph: "🔉", label: "Vol −", tip: "Bajar volumen", action: "volDown" },
-                { glyph: "🔊", label: "Vol +", tip: "Subir volumen", action: "volUp" }
+                { iconName: "user-home", label: "Inicio", tip: "Pantalla de inicio (Home)", action: "home" },
+                { iconName: "window-duplicate", label: "Multitarea", tip: "Aplicaciones recientes (App Switcher)", action: "switcher" },
+                { iconName: "system-lock-screen", label: "Bloquear", tip: "Bloquear / apagar la pantalla", action: "lock" },
+                { iconName: "notifications", label: "Avisos", tip: "Panel de notificaciones", action: "notifications" },
+                { iconName: "configure", label: "Ajustes", tip: "Ajustes rápidos de Android", action: "settings" },
+                { iconName: "camera-photo", label: "Captura", tip: "Capturar pantalla y guardar en Imágenes", action: "screenshot" },
+                { iconName: "audio-volume-low", label: "Vol −", tip: "Bajar volumen", action: "volDown" },
+                { iconName: "audio-volume-high", label: "Vol +", tip: "Subir volumen", action: "volUp" }
             ]
 
             CachyToolbarButton {
                 required property var modelData
 
-                text: modelData.glyph
+                iconName: modelData.iconName
                 tooltipText: modelData.tip
 
                 onClicked: {

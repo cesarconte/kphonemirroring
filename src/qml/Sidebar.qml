@@ -79,7 +79,7 @@ ColumnLayout {
                 readonly property bool isSelected: deviceManager.selectedDevice.serial === modelData.serial
 
                 text: modelData.name || modelData.model || modelData.serial
-                iconGlyph: "▭"
+                iconName: "smartphone"
                 iconColor: "#30D158"
                 squircleIconBadge: true
                 badgeText: modelData.batteryLevel >= 0 ? (modelData.batteryLevel + "%") : ""

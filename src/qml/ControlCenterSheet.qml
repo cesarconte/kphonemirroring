@@ -61,7 +61,7 @@ Rectangle {
             }
 
             CachyToolbarButton {
-                text: "✕"
+                iconName: "window-close"
                 tooltipText: "Cerrar"
                 onClicked: root.dismissRequested()
             }
@@ -83,12 +83,21 @@ Rectangle {
                 border.width: 1
                 border.color: mirrorSession.audioEnabled ? CachyTheme.accentColor : CachyTheme.specularBorder
 
-                Text {
+                RowLayout {
                     anchors.centerIn: parent
-                    text: "🔊 Audio PC"
-                    font.pixelSize: 11
-                    font.weight: Font.DemiBold
-                    color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyTheme.textPrimary
+                    spacing: 6
+                    CachyIcon {
+                        name: "audio-volume-high"
+                        size: 14
+                        colored: false
+                        color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyTheme.textPrimary
+                    }
+                    Text {
+                        text: "Audio PC"
+                        font.pixelSize: 11
+                        font.weight: Font.DemiBold
+                        color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyTheme.textPrimary
+                    }
                 }
 
                 TapHandler {
@@ -104,12 +113,21 @@ Rectangle {
                 border.width: 1
                 border.color: mirrorSession.turnScreenOff ? "#30D158" : CachyTheme.specularBorder
 
-                Text {
+                RowLayout {
                     anchors.centerIn: parent
-                    text: "🌙 Pantalla Off"
-                    font.pixelSize: 11
-                    font.weight: Font.DemiBold
-                    color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyTheme.textPrimary
+                    spacing: 6
+                    CachyIcon {
+                        name: "weather-clear-night"
+                        size: 14
+                        colored: false
+                        color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyTheme.textPrimary
+                    }
+                    Text {
+                        text: "Pantalla Off"
+                        font.pixelSize: 11
+                        font.weight: Font.DemiBold
+                        color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyTheme.textPrimary
+                    }
                 }
 
                 TapHandler {
@@ -125,12 +143,21 @@ Rectangle {
                 border.width: 1
                 border.color: CachyTheme.specularBorder
 
-                Text {
+                RowLayout {
                     anchors.centerIn: parent
-                    text: "📸 Captura"
-                    font.pixelSize: 11
-                    font.weight: Font.DemiBold
-                    color: CachyTheme.textPrimary
+                    spacing: 6
+                    CachyIcon {
+                        name: "camera-photo"
+                        size: 14
+                        colored: false
+                        color: CachyTheme.textPrimary
+                    }
+                    Text {
+                        text: "Captura"
+                        font.pixelSize: 11
+                        font.weight: Font.DemiBold
+                        color: CachyTheme.textPrimary
+                    }
                 }
 
                 TapHandler {
@@ -146,12 +173,21 @@ Rectangle {
                 border.width: 1
                 border.color: CachyTheme.specularBorder
 
-                Text {
+                RowLayout {
                     anchors.centerIn: parent
-                    text: "🔔 Avisos"
-                    font.pixelSize: 11
-                    font.weight: Font.DemiBold
-                    color: CachyTheme.textPrimary
+                    spacing: 6
+                    CachyIcon {
+                        name: "notifications"
+                        size: 14
+                        colored: false
+                        color: CachyTheme.textPrimary
+                    }
+                    Text {
+                        text: "Avisos"
+                        font.pixelSize: 11
+                        font.weight: Font.DemiBold
+                        color: CachyTheme.textPrimary
+                    }
                 }
 
                 TapHandler {

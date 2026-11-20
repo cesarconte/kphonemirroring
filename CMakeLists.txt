@@ -7,10 +7,10 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Core Gui Qml Quick QuickControls2 Test)
+find_package(KF6I18n REQUIRED)
 
 # The CachyOS.UI design system provides the QML module and the shared layout
-# auditor. It is installed system wide or in the user prefix.
-list(APPEND CMAKE_PREFIX_PATH "$ENV{HOME}/.local" "/usr/local")
+# auditor. It is installed system wide in /usr.
 find_package(CachyOSUITesting REQUIRED)
 
 set(SOURCES
@@ -30,6 +30,7 @@ target_link_libraries(kphonemirroring PRIVATE
     Qt6::Qml
     Qt6::Quick
     Qt6::QuickControls2
+    KF6::I18n
 )
 
 target_include_directories(kphonemirroring PRIVATE src)

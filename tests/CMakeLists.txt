@@ -53,8 +53,7 @@ target_link_libraries(test_layout_audit PRIVATE
 
 add_test(NAME test_layout_audit COMMAND test_layout_audit)
 
-# The audit needs the CachyOS.UI QML module; the path can be overridden with
-# CACHYOS_UI_IMPORT_PATH for non standard installations.
+# The audit needs the CachyOS.UI QML module.
 set_tests_properties(test_layout_audit PROPERTIES
-    ENVIRONMENT "CACHYOS_UI_IMPORT_PATH=$ENV{HOME}/.local/lib/qt6/qml"
+    ENVIRONMENT "CACHYOS_UI_IMPORT_PATH=/usr/lib/qt6/qml"
 )

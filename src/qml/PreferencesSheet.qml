@@ -2,7 +2,7 @@
     SPDX-FileCopyrightText: 2026 Cesar
     SPDX-License-Identifier: GPL-3.0-or-later
 
-    Golden Gate preferences sheet (⚙, far right of the header) holding every
+    Golden Gate preferences sheet (far right of the header) holding every
     mirroring option. It is the single source of truth for the scrcpy stream:
     the values are owned by `MirrorSession` and persisted between sessions.
 */
@@ -62,7 +62,7 @@ Rectangle {
             }
 
             CachyToolbarButton {
-                text: "✕"
+                iconName: "window-close"
                 tooltipText: "Cerrar"
                 onClicked: root.dismissRequested()
             }

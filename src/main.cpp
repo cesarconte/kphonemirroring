@@ -6,12 +6,14 @@
 #include <QQuickWindow>
 #include <QTimer>
 #include <QIcon>
+#include <KLocalizedString>
 #include "DeviceManager.h"
 #include "MirrorSession.h"
 
 int main(int argc, char *argv[])
 {
     QGuiApplication app(argc, argv);
+    KLocalizedString::setApplicationDomain("kphonemirroring");
     app.setApplicationName("kphonemirroring");
     app.setApplicationDisplayName("Android Mirroring");
     app.setOrganizationName("cesarconte");
@@ -37,7 +39,7 @@ int main(int argc, char *argv[])
     MirrorSession mirrorSession;
 
     QQmlApplicationEngine engine;
-    engine.addImportPath(QStringLiteral("/home/cesar/.local/lib/qt6/qml"));
+    engine.addImportPath(QStringLiteral("/usr/lib/qt6/qml"));
     engine.rootContext()->setContextProperty("deviceManager", &deviceManager);
     engine.rootContext()->setContextProperty("mirrorSession", &mirrorSession);
 

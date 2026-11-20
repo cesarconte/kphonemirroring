@@ -11,6 +11,7 @@ pragma ComponentBehavior: Bound
 
 import QtQuick
 import QtQuick.Layouts
+import CachyOS.UI
 
 Item {
     id: root
@@ -138,10 +139,17 @@ Item {
             anchors.rightMargin: 12
             spacing: 8
 
+            CachyIcon {
+                name: mirrorSession.audioEnabled ? "audio-volume-high" : "audio-volume-muted"
+                size: 14
+                colored: false
+                color: "#E5E5EA"
+            }
+
             Text {
                 Layout.fillWidth: true
                 Layout.minimumWidth: 0
-                text: "🔊 " + (mirrorSession.audioEnabled ? "Audio → PipeWire" : "Audio desactivado")
+                text: mirrorSession.audioEnabled ? "Audio → PipeWire" : "Audio desactivado"
                 font.pixelSize: 11
                 color: "#E5E5EA"
                 elide: Text.ElideRight
