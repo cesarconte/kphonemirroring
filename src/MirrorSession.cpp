@@ -305,31 +305,46 @@ void MirrorSession::returnToHomeScreen()
     Q_EMIT controlCenterVisibleChanged();
 
     sendHome();
-    // Golden Gate resets window to normal portrait size when returning to Home Screen
-    Q_EMIT requestWindowResize(440, 700);
+    // Golden Gate restores remembered compact portrait size when returning to Home Screen
+    const QVariantMap saved = rememberedSizeForApp(QStringLiteral("home"));
+    Q_EMIT requestWindowResize(saved.value(QStringLiteral("width"), 440).toInt(),
+                               saved.value(QStringLiteral("height"), 700).toInt());
+}
+
+void MirrorSession::restoreDefaultSize()
+{
+    m_currentAppId = QStringLiteral("today");
+    m_currentAppTitle = QStringLiteral("Today");
+    m_controlCenterVisible = false;
+    Q_EMIT currentAppChanged();
+    Q_EMIT controlCenterVisibleChanged();
+
+    const QVariantMap saved = rememberedSizeForApp(QStringLiteral("today"));
+    // Canonical default multi-column size: content width 748 (total 980 with 232 sidebar), height 680
+    Q_EMIT requestWindowResize(saved.value(QStringLiteral("width"), 748).toInt(),
+                               saved.value(QStringLiteral("height"), 680).toInt());
 }
 
 void MirrorSession::saveAppWindowSize(const QString &appId, int width, int height)
 {
-    const QString cleanId = appId.trimmed();
-    if (cleanId.isEmpty() || cleanId == QLatin1String("home")) {
-        return;
-    }
+    const QString cleanId = appId.trimmed().isEmpty() ? QStringLiteral("today") : appId.trimmed();
     QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
     settings.beginGroup(QStringLiteral("AppWindowSizes"));
-    settings.setValue(cleanId + QStringLiteral("_width"), qBound(400, width, 1600));
-    settings.setValue(cleanId + QStringLiteral("_height"), qBound(520, height, 1200));
+    const int minW = (cleanId == QLatin1String("home")) ? 360 : 440;
+    const int minH = 480;
+    settings.setValue(cleanId + QStringLiteral("_width"), qBound(minW, width, 1920));
+    settings.setValue(cleanId + QStringLiteral("_height"), qBound(minH, height, 1440));
     settings.endGroup();
     settings.sync();
 }
 
 QVariantMap MirrorSession::rememberedSizeForApp(const QString &appId) const
 {
-    const QString cleanId = appId.trimmed();
+    const QString cleanId = appId.trimmed().isEmpty() ? QStringLiteral("today") : appId.trimmed();
     QSettings settings(QStringLiteral("cesar.org"), QStringLiteral("kphonemirroring"));
     settings.beginGroup(QStringLiteral("AppWindowSizes"));
-    const int defaultW = (cleanId == QLatin1String("home")) ? 440 : 780;
-    const int defaultH = (cleanId == QLatin1String("home")) ? 700 : 620;
+    const int defaultW = (cleanId == QLatin1String("home")) ? 440 : 748;
+    const int defaultH = (cleanId == QLatin1String("home")) ? 700 : 680;
     const int w = settings.value(cleanId + QStringLiteral("_width"), defaultW).toInt();
     const int h = settings.value(cleanId + QStringLiteral("_height"), defaultH).toInt();
     settings.endGroup();

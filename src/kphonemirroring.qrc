@@ -12,5 +12,15 @@
         <file>qml/ControlCenterSheet.qml</file>
         <file>qml/PreferencesSheet.qml</file>
         <file>resources/icons/kphonemirroring.svg</file>
+        <file>resources/icons/apps/chatgpt.svg</file>
+        <file>resources/icons/apps/whatsapp.svg</file>
+        <file>resources/icons/apps/spotify.svg</file>
+        <file>resources/icons/apps/youtube.svg</file>
+        <file>resources/icons/apps/instagram.svg</file>
+        <file>resources/icons/apps/maps.svg</file>
+        <file>resources/icons/apps/camera.svg</file>
+        <file>resources/icons/apps/files.svg</file>
+        <file>resources/icons/apps/settings.svg</file>
+        <file>resources/icons/apps/clock.svg</file>
     </qresource>
 </RCC>

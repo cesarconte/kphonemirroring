@@ -31,8 +31,8 @@ CachyWindow {
     title: "Android Mirroring"
     width: 980
     height: 680
-    minimumWidth: 620
-    minimumHeight: 520
+    minimumWidth: 440
+    minimumHeight: 480
     visible: true
 
     showTrafficLights: true
@@ -112,13 +112,13 @@ CachyWindow {
     }
 
     onWidthChanged: {
-        if (!root.programmaticResize && mirrorSession.currentAppId !== "home") {
-            mirrorSession.saveAppWindowSize(mirrorSession.currentAppId, root.viewportWidth, root.viewportHeight);
+        if (!root.programmaticResize) {
+            mirrorSession.saveAppWindowSize(mirrorSession.currentAppId, root.viewportWidth, root.height);
         }
     }
     onHeightChanged: {
-        if (!root.programmaticResize && mirrorSession.currentAppId !== "home") {
-            mirrorSession.saveAppWindowSize(mirrorSession.currentAppId, root.viewportWidth, root.viewportHeight);
+        if (!root.programmaticResize) {
+            mirrorSession.saveAppWindowSize(mirrorSession.currentAppId, root.viewportWidth, root.height);
         }
     }
 
@@ -184,12 +184,18 @@ CachyWindow {
                     CachyMenuSeparator {}
 
                     CachyMenuItem {
-                        text: "Compact Portrait Size (440×700)"
-                        onTriggered: mirrorSession.returnToHomeScreen()
+                        text: "Vista compacta (Retrato)\tCtrl+1"
+                        onTriggered: {
+                            root.activeTab = "today";
+                            mirrorSession.returnToHomeScreen();
+                        }
                     }
                     CachyMenuItem {
-                        text: "Multi-Column Expanded Size (780×620)"
-                        onTriggered: mirrorSession.openApp("today", "Today")
+                        text: "Vista por defecto (Expandida)"
+                        onTriggered: {
+                            root.activeTab = "today";
+                            mirrorSession.restoreDefaultSize();
+                        }
                     }
                     CachyMenuItem {
                         text: "Preferencias…\tCtrl+,"

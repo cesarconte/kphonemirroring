@@ -139,6 +139,19 @@ void TestPhoneMirroring::testGoldenGatePerAppWindowSizeMemory()
     QCOMPARE(resizeSpy.at(1).at(0).toInt(), 440);
     QCOMPARE(resizeSpy.at(1).at(1).toInt(), 700);
 
+    // Saving custom compact size for "home" is remembered and restored
+    session.saveAppWindowSize(QStringLiteral("home"), 460, 720);
+    session.returnToHomeScreen();
+    QCOMPARE(resizeSpy.count(), 3);
+    QCOMPARE(resizeSpy.at(2).at(0).toInt(), 460);
+    QCOMPARE(resizeSpy.at(2).at(1).toInt(), 720);
+
+    // Restoring default size restores canonical 748x680 (or saved)
+    session.restoreDefaultSize();
+    QCOMPARE(resizeSpy.count(), 4);
+    QCOMPARE(resizeSpy.at(3).at(0).toInt(), 748);
+    QCOMPARE(resizeSpy.at(3).at(1).toInt(), 680);
+
     // Control Center toggle (Cmd+4)
     QVERIFY(!session.controlCenterVisible());
     session.openControlCenter();

@@ -77,6 +77,7 @@ public Q_SLOTS:
     // Golden Gate Per-App Dynamic Window Size Memory
     void openApp(const QString &appId, const QString &appTitle, const QString &androidPackage = QString());
     void returnToHomeScreen();
+    void restoreDefaultSize();
     void saveAppWindowSize(const QString &appId, int width, int height);
     QVariantMap rememberedSizeForApp(const QString &appId) const;
 

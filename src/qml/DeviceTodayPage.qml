@@ -262,9 +262,9 @@ Flickable {
 
                             CachyIcon {
                                 anchors.centerIn: parent
-                                name: "kity-symbolic"
+                                name: "qrc:/resources/icons/apps/chatgpt.svg"
                                 size: 38
-                                colored: false
+                                colored: true
                                 color: "#111114"
                             }
                         }
@@ -402,7 +402,7 @@ Flickable {
                                     anchors.centerIn: parent
                                     name: modelData.iconName
                                     size: 22
-                                    colored: false
+                                    colored: true
                                     color: "#111114"
                                 }
                             }

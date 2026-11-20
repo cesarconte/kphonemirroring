@@ -98,16 +98,16 @@ Flickable {
 
                     Repeater {
                         model: [
-                            { id: "chatgpt", title: "ChatGPT", iconName: "kity-symbolic", tint: "#10A37F", pkg: "com.openai.chatgpt" },
-                            { id: "whatsapp", title: "WhatsApp", iconName: "im-whatsapp", tint: "#25D366", pkg: "com.whatsapp" },
-                            { id: "spotify", title: "Spotify", iconName: "spotify", tint: "#1DB954", pkg: "com.spotify.music" },
-                            { id: "youtube", title: "YouTube", iconName: "youtube", tint: "#FF0000", pkg: "com.google.android.youtube" },
-                            { id: "instagram", title: "Instagram", iconName: "instagram", tint: "#E1306C", pkg: "com.instagram.android" },
-                            { id: "maps", title: "Maps", iconName: "mark-location", tint: "#34A853", pkg: "com.google.android.apps.maps" },
-                            { id: "camera", title: "Camera", iconName: "camera-photo", tint: "#5856D6", pkg: "com.android.camera2" },
-                            { id: "files", title: "Files", iconName: "folder", tint: "#0A84FF", pkg: "com.google.android.documentsui" },
-                            { id: "settings", title: "Settings", iconName: "configure", tint: "#8E8E93", pkg: "com.android.settings" },
-                            { id: "clock", title: "Clock", iconName: "preferences-system-time", tint: "#FF9500", pkg: "com.google.android.deskclock" }
+                            { id: "chatgpt", title: "ChatGPT", tint: "#10A37F", pkg: "com.openai.chatgpt" },
+                            { id: "whatsapp", title: "WhatsApp", tint: "#25D366", pkg: "com.whatsapp" },
+                            { id: "spotify", title: "Spotify", tint: "#1DB954", pkg: "com.spotify.music" },
+                            { id: "youtube", title: "YouTube", tint: "#FF0000", pkg: "com.google.android.youtube" },
+                            { id: "instagram", title: "Instagram", tint: "#E1306C", pkg: "com.instagram.android" },
+                            { id: "maps", title: "Maps", tint: "#34A853", pkg: "com.google.android.apps.maps" },
+                            { id: "camera", title: "Camera", tint: "#5856D6", pkg: "com.android.camera2" },
+                            { id: "files", title: "Files", tint: "#0A84FF", pkg: "com.google.android.documentsui" },
+                            { id: "settings", title: "Settings", tint: "#8E8E93", pkg: "com.android.settings" },
+                            { id: "clock", title: "Clock", tint: "#FF9500", pkg: "com.google.android.deskclock" }
                         ]
 
                         ColumnLayout {
@@ -125,9 +125,9 @@ Flickable {
 
                                 CachyIcon {
                                     anchors.centerIn: parent
-                                    name: modelData.iconName
+                                    name: "qrc:/resources/icons/apps/" + modelData.id + ".svg"
                                     size: 26
-                                    colored: false
+                                    colored: true
                                     color: "#FFFFFF"
                                 }
                             }
@@ -168,7 +168,13 @@ Flickable {
                     Layout.preferredHeight: 42
                     radius: 12
                     color: "#1C1C22"
-                    CachyIcon { anchors.centerIn: parent; name: "smartphone"; size: 20; colored: false; color: "#FFFFFF" }
+                    CachyIcon {
+                        anchors.centerIn: parent
+                        name: "smartphone"
+                        size: 22
+                        colored: true
+                        color: "#FFFFFF"
+                    }
                 }
 
                 ColumnLayout {
