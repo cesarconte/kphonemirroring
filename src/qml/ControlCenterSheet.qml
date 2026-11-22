@@ -1,10 +1,11 @@
 /*
-    SPDX-FileCopyrightText: 2026 Cesar
-    SPDX-License-Identifier: GPL-3.0-or-later
-
-    Golden Gate Control Center (Ctrl+4) rendered as a Liquid Glass sheet on top
-    of the window, replicating the CachyOS Android Phone Mirroring quick controls.
-*/
+ * SPDX-FileCopyrightText: 2026 Cesar
+ * SPDX-FileCopyrightText: 2026 CachyOS UI contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Golden Gate Control Center (Ctrl+4) rendered as a Liquid Glass sheet on top
+ * of the window, replicating the CachyOS Android Phone Mirroring quick controls.
+ */
 
 pragma ComponentBehavior: Bound
 
@@ -20,9 +21,9 @@ Rectangle {
     width: 300
     implicitHeight: sheetColumn.implicitHeight + 24
     radius: CachyTheme.radiusLarge
-    color: CachyTheme.sheetBackground
+    color: CachyPalette.sheetBackground
     border.width: 1
-    border.color: CachyTheme.specularBorder
+    border.color: CachyPalette.specularBorder
 
     // Liquid Glass depth: specular highlight on the upper edge
     Rectangle {
@@ -33,7 +34,7 @@ Rectangle {
         opacity: 0.5
 
         gradient: Gradient {
-            GradientStop { position: 0.0; color: CachyTheme.isDark ? Qt.rgba(1, 1, 1, 0.10) : Qt.rgba(1, 1, 1, 0.55) }
+            GradientStop { position: 0.0; color: CachyPalette.isDark ? Qt.rgba(1, 1, 1, 0.10) : Qt.rgba(1, 1, 1, 0.55) }
             GradientStop { position: 0.5; color: "transparent" }
         }
     }
@@ -56,7 +57,7 @@ Rectangle {
                 text: "Control Center"
                 font.pixelSize: 13
                 font.weight: Font.Bold
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 elide: Text.ElideRight
             }
 
@@ -79,9 +80,9 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 46
                 radius: CachyTheme.radiusMedium
-                color: mirrorSession.audioEnabled ? CachyTheme.accentColor : CachyTheme.surfacePill
+                color: mirrorSession.audioEnabled ? CachyTheme.accentColor : CachyPalette.surfacePill
                 border.width: 1
-                border.color: mirrorSession.audioEnabled ? CachyTheme.accentColor : CachyTheme.specularBorder
+                border.color: mirrorSession.audioEnabled ? CachyTheme.accentColor : CachyPalette.specularBorder
 
                 RowLayout {
                     anchors.centerIn: parent
@@ -89,14 +90,13 @@ Rectangle {
                     CachyIcon {
                         name: "audio-volume-high"
                         size: 14
-                        colored: false
-                        color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyTheme.textPrimary
+                        color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyPalette.text
                     }
                     Text {
                         text: "Audio PC"
                         font.pixelSize: 11
                         font.weight: Font.DemiBold
-                        color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyTheme.textPrimary
+                        color: mirrorSession.audioEnabled ? "#FFFFFF" : CachyPalette.text
                     }
                 }
 
@@ -109,9 +109,9 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 46
                 radius: CachyTheme.radiusMedium
-                color: mirrorSession.turnScreenOff ? "#30D158" : CachyTheme.surfacePill
+                color: mirrorSession.turnScreenOff ? "#30D158" : CachyPalette.surfacePill
                 border.width: 1
-                border.color: mirrorSession.turnScreenOff ? "#30D158" : CachyTheme.specularBorder
+                border.color: mirrorSession.turnScreenOff ? "#30D158" : CachyPalette.specularBorder
 
                 RowLayout {
                     anchors.centerIn: parent
@@ -119,14 +119,13 @@ Rectangle {
                     CachyIcon {
                         name: "weather-clear-night"
                         size: 14
-                        colored: false
-                        color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyTheme.textPrimary
+                        color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyPalette.text
                     }
                     Text {
                         text: "Pantalla Off"
                         font.pixelSize: 11
                         font.weight: Font.DemiBold
-                        color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyTheme.textPrimary
+                        color: mirrorSession.turnScreenOff ? "#FFFFFF" : CachyPalette.text
                     }
                 }
 
@@ -139,9 +138,9 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 46
                 radius: CachyTheme.radiusMedium
-                color: CachyTheme.surfacePill
+                color: CachyPalette.surfacePill
                 border.width: 1
-                border.color: CachyTheme.specularBorder
+                border.color: CachyPalette.specularBorder
 
                 RowLayout {
                     anchors.centerIn: parent
@@ -149,14 +148,13 @@ Rectangle {
                     CachyIcon {
                         name: "camera-photo"
                         size: 14
-                        colored: false
-                        color: CachyTheme.textPrimary
+                        color: CachyPalette.text
                     }
                     Text {
                         text: "Captura"
                         font.pixelSize: 11
                         font.weight: Font.DemiBold
-                        color: CachyTheme.textPrimary
+                        color: CachyPalette.text
                     }
                 }
 
@@ -169,9 +167,9 @@ Rectangle {
                 Layout.fillWidth: true
                 Layout.preferredHeight: 46
                 radius: CachyTheme.radiusMedium
-                color: CachyTheme.surfacePill
+                color: CachyPalette.surfacePill
                 border.width: 1
-                border.color: CachyTheme.specularBorder
+                border.color: CachyPalette.specularBorder
 
                 RowLayout {
                     anchors.centerIn: parent
@@ -179,14 +177,13 @@ Rectangle {
                     CachyIcon {
                         name: "notifications"
                         size: 14
-                        colored: false
-                        color: CachyTheme.textPrimary
+                        color: CachyPalette.text
                     }
                     Text {
                         text: "Avisos"
                         font.pixelSize: 11
                         font.weight: Font.DemiBold
-                        color: CachyTheme.textPrimary
+                        color: CachyPalette.text
                     }
                 }
 
@@ -202,7 +199,7 @@ Rectangle {
             Layout.minimumWidth: 0
             text: "El audio se captura desde el stream por defecto de PipeWire para respetar los filtros DSP de EasyEffects."
             font.pixelSize: 10
-            color: CachyTheme.textMuted
+            color: CachyPalette.textMuted
             wrapMode: Text.WordWrap
         }
     }

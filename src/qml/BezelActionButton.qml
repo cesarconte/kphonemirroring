@@ -27,7 +27,7 @@ Rectangle {
     implicitHeight: 24
     radius: 6
 
-    readonly property color glyphColor: root.active ? "#FFFFFF" : CachyTheme.textPrimary
+    readonly property color glyphColor: root.active ? "#FFFFFF" : CachyPalette.text
 
     color: root.active
         ? CachyTheme.accentColor

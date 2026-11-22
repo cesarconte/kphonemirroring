@@ -1,11 +1,12 @@
 /*
-    SPDX-FileCopyrightText: 2026 Cesar
-    SPDX-License-Identifier: GPL-3.0-or-later
-
-    Golden Gate preferences sheet (far right of the header) holding every
-    mirroring option. It is the single source of truth for the scrcpy stream:
-    the values are owned by `MirrorSession` and persisted between sessions.
-*/
+ * SPDX-FileCopyrightText: 2026 Cesar
+ * SPDX-FileCopyrightText: 2026 CachyOS UI contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ *
+ * Golden Gate preferences sheet (far right of the header) holding every
+ * mirroring option. It is the single source of truth for the scrcpy stream:
+ * the values are owned by `MirrorSession` and persisted between sessions.
+ */
 
 pragma ComponentBehavior: Bound
 
@@ -21,9 +22,9 @@ Rectangle {
     width: 380
     implicitHeight: sheetColumn.implicitHeight + 24
     radius: CachyTheme.radiusLarge
-    color: CachyTheme.sheetBackground
+    color: CachyPalette.sheetBackground
     border.width: 1
-    border.color: CachyTheme.specularBorder
+    border.color: CachyPalette.specularBorder
 
     // Liquid Glass depth: specular highlight on the upper edge
     Rectangle {
@@ -34,7 +35,7 @@ Rectangle {
         opacity: 0.5
 
         gradient: Gradient {
-            GradientStop { position: 0.0; color: CachyTheme.isDark ? Qt.rgba(1, 1, 1, 0.10) : Qt.rgba(1, 1, 1, 0.55) }
+            GradientStop { position: 0.0; color: CachyPalette.isDark ? Qt.rgba(1, 1, 1, 0.10) : Qt.rgba(1, 1, 1, 0.55) }
             GradientStop { position: 0.5; color: "transparent" }
         }
     }
@@ -57,7 +58,7 @@ Rectangle {
                 text: "Preferencias de duplicación"
                 font.pixelSize: 13
                 font.weight: Font.Bold
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 elide: Text.ElideRight
             }
 
@@ -81,7 +82,7 @@ Rectangle {
                 Layout.minimumWidth: 0
                 text: "Apagar la pantalla física del móvil"
                 font.pixelSize: 12
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 wrapMode: Text.WordWrap
             }
 
@@ -101,7 +102,7 @@ Rectangle {
                 Layout.minimumWidth: 0
                 text: "Mantener el dispositivo despierto"
                 font.pixelSize: 12
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 wrapMode: Text.WordWrap
             }
 
@@ -121,7 +122,7 @@ Rectangle {
                 Layout.minimumWidth: 0
                 text: "Transmitir el audio por PipeWire"
                 font.pixelSize: 12
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 wrapMode: Text.WordWrap
             }
 
@@ -144,11 +145,12 @@ Rectangle {
                 Layout.minimumWidth: 0
                 text: "Tasa de fotogramas"
                 font.pixelSize: 12
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 wrapMode: Text.WordWrap
             }
 
             CachySegmentedControl {
+                accentSelected: true
                 model: ["30", "60", "120"]
                 currentIndex: mirrorSession.maxFps <= 30 ? 0 : (mirrorSession.maxFps >= 120 ? 2 : 1)
                 onCurrentIndexChanged: mirrorSession.maxFps = [30, 60, 120][currentIndex]
@@ -166,7 +168,7 @@ Rectangle {
                 Layout.minimumWidth: 0
                 text: "Tasa de bits"
                 font.pixelSize: 12
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
                 wrapMode: Text.WordWrap
             }
 
@@ -176,7 +178,7 @@ Rectangle {
                 text: mirrorSession.bitrateMbps + " Mbps"
                 font.pixelSize: 12
                 font.weight: Font.DemiBold
-                color: CachyTheme.textSecondary
+                color: CachyPalette.textSecondary
                 elide: Text.ElideRight
             }
         }
@@ -197,7 +199,7 @@ Rectangle {
             Layout.minimumWidth: 0
             text: "El audio nunca se fija a un dispositivo físico (hw:*): se captura del stream por defecto de WirePlumber para atravesar la cadena DSP de EasyEffects."
             font.pixelSize: 10
-            color: CachyTheme.textMuted
+            color: CachyPalette.textMuted
             wrapMode: Text.WordWrap
         }
     }

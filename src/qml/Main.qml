@@ -36,7 +36,7 @@ CachyWindow {
     visible: true
 
     showTrafficLights: true
-    showTitleBarDivider: true          // hard 1px divider under the 44px header
+    showTitleBarDivider: false         // Liquid Glass: floating header without hard horizontal line
     showWindowFrame: true              // Liquid Glass: KWin blur + gloss + specular rim
     resizable: true
     cornerRadius: CachyTheme.radiusWindow
@@ -140,9 +140,9 @@ CachyWindow {
                 height: 28
                 implicitWidth: viewMenuLabel.implicitWidth + 18
                 radius: 14
-                color: viewMenuHover.hovered ? CachyTheme.cardBackgroundHover : CachyTheme.surfacePill
+                color: viewMenuHover.hovered ? CachyPalette.cardBackgroundHover : CachyPalette.surfacePill
                 border.width: 1
-                border.color: CachyTheme.specularBorder
+                border.color: CachyPalette.specularBorder
 
                 Behavior on color { ColorAnimation { duration: CachyTheme.animFast } }
 
@@ -155,7 +155,7 @@ CachyWindow {
                     text: "View ▾"
                     font.pixelSize: 12
                     font.weight: Font.DemiBold
-                    color: CachyTheme.textPrimary
+                    color: CachyPalette.text
                 }
 
                 CachyMenu {
@@ -214,42 +214,36 @@ CachyWindow {
             anchors.verticalCenter: parent.verticalCenter
             spacing: 6
 
-            BezelActionButton {
-                iconKind: "home"
-                tooltipText: "Home Screen (Ctrl+1 — restaura el tamaño vertical)"
-                onClicked: {
-                    root.activeTab = "today";
-                    mirrorSession.returnToHomeScreen();
+            CachyToolbarGroup {
+                BezelActionButton {
+                    iconKind: "home"
+                    tooltipText: "Home Screen (Ctrl+1 — restaura el tamaño vertical)"
+                    onClicked: {
+                        root.activeTab = "today";
+                        mirrorSession.returnToHomeScreen();
+                    }
                 }
-            }
 
-            BezelActionButton {
-                iconKind: "switcher"
-                tooltipText: "App Switcher (Ctrl+2)"
-                onClicked: mirrorSession.sendAppSwitcher()
-            }
-
-            BezelActionButton {
-                iconKind: "controlCenter"
-                active: mirrorSession.controlCenterVisible
-                tooltipText: "Control Center (Ctrl+4)"
-                onClicked: {
-                    root.preferencesVisible = false;
-                    mirrorSession.openControlCenter();
+                BezelActionButton {
+                    iconKind: "switcher"
+                    tooltipText: "App Switcher (Ctrl+2)"
+                    onClicked: mirrorSession.sendAppSwitcher()
                 }
-            }
 
-            // Golden Gate hard separator between the bezel cluster and the
-            // preferences gear (always the last element of the header).
-            Rectangle {
-                Layout.preferredWidth: 1
-                Layout.preferredHeight: 18
-                Layout.alignment: Qt.AlignVCenter
-                color: CachyTheme.hardDividerColor
+                BezelActionButton {
+                    iconKind: "controlCenter"
+                    active: mirrorSession.controlCenterVisible
+                    tooltipText: "Control Center (Ctrl+4)"
+                    onClicked: {
+                        root.preferencesVisible = false;
+                        mirrorSession.openControlCenter();
+                    }
+                }
             }
 
             CachyToolbarButton {
                 iconName: "configure"
+                pillStyle: true
                 tooltipText: "Preferencias de duplicación (Ctrl+,)"
                 onClicked: {
                     mirrorSession.controlCenterVisible = false;
@@ -357,9 +351,9 @@ CachyWindow {
             height: 34
             implicitWidth: toastText.implicitWidth + 24
             radius: 17
-            color: CachyTheme.cardBackground
+            color: CachyPalette.sheetBackground
             border.width: 1
-            border.color: CachyTheme.specularBorder
+            border.color: CachyPalette.specularBorder
             opacity: 0
             z: 5
 
@@ -368,7 +362,7 @@ CachyWindow {
                 anchors.centerIn: parent
                 text: "Captura guardada en Imágenes"
                 font.pixelSize: 12
-                color: CachyTheme.textPrimary
+                color: CachyPalette.text
             }
 
             NumberAnimation on opacity {

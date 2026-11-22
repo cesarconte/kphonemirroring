@@ -66,9 +66,9 @@ La interfaz consume el módulo QML `CachyOS.UI` (Liquid Glass, `CachyWindow`,
 
 ```bash
 cd ../cachyos-ui
-cmake -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/
+cmake -B build -DCMAKE_BUILD_TYPE=Release
 cmake --build build -j"$(nproc)"
-DESTDIR=$HOME/.local cmake --install build
+sudo -n cmake --install build --prefix /usr
 ```
 
 ---
